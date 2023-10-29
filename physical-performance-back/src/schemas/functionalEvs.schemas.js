@@ -40,8 +40,10 @@ const functEv05Schema = joi.object({
   type: joi.string().min(9).max(10).required(),
   patientId: joi.number().required(),
   evOrder: joi.number().required(),
-  iml01: joi.number().min(1).max(1).required(),
-  imr01: joi.number().min(1).max(1).required(),
+  iml05dist: joi.number().min(1).max(5).required(),
+  iml05dist: joi.number().min(1).max(5).required(),
+  iml05ang: joi.number().min(1).max(3).required(),
+  iml05ang: joi.number().min(1).max(3).required(),
   observation: joi.string().empty('')
 });
 
@@ -49,8 +51,10 @@ const functEv06Schema = joi.object({
   type: joi.string().min(9).max(10).required(),
   patientId: joi.number().required(),
   evOrder: joi.number().required(),
-  iml01: joi.number().min(1).max(1).required(),
-  imr01: joi.number().min(1).max(1).required(),
+  iml06quad: joi.number().min(1).max(5).required(),
+  iml06quad: joi.number().min(1).max(5).required(),
+  iml06isqui: joi.number().min(1).max(5).required(),
+  iml06isqui: joi.number().min(1).max(5).required(),
   observation: joi.string().empty('')
 });
 
@@ -58,8 +62,9 @@ const functEv07Schema = joi.object({
   type: joi.string().min(9).max(10).required(),
   patientId: joi.number().required(),
   evOrder: joi.number().required(),
-  iml01: joi.number().min(1).max(1).required(),
-  imr01: joi.number().min(1).max(1).required(),
+  cmj07: joi.number().min(1).max(5).required(),
+  iml07sh: joi.number().min(1).max(5).required(),
+  imr07sh: joi.number().min(1).max(5).required(),
   observation: joi.string().empty('')
 });
 
@@ -67,8 +72,10 @@ const functEv08Schema = joi.object({
   type: joi.string().min(9).max(10).required(),
   patientId: joi.number().required(),
   evOrder: joi.number().required(),
-  iml01: joi.number().min(1).max(1).required(),
-  imr01: joi.number().min(1).max(1).required(),
+  cmj08: joi.number().min(1).max(5).required(),
+  sj08: joi.number().min(1).max(5).required(),
+  iml08cmjuni: joi.number().min(1).max(5).required(),
+  imr08cmjuni: joi.number().min(1).max(5).required(),
   observation: joi.string().empty('')
 });
 
