@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import GlobalStyle from "./GlobalStyle";
+import UserContext from "../context/UserContext";
+import HomePage from "./home/HomePage";
 
-function App() {
+export default function App () {
+  const [token, setToken] = useState(localStorage.getItem("userData"));
+  const [authData, setAuthData] = useState(JSON.parse(localStorage.getItem("userData")));
+  
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    setAuthData(userData);
+  }, [token]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <BrowserRouter>
+        <AuthContext.Provider value={{ token, setToken }}>
+        <UserContext.Provider value={{ authData, setAuthData }}>
+          <Routes>
+            <Route path="/" element={<SignIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route
+              path="/timeline"
+              element={
+                <HomePage>
+                  
+                </HomePage>
+              } />
+          </Routes>
+        </UserContext.Provider>
+        </AuthContext.Provider>
+      </BrowserRouter>
+    </>
   );
 }
-
-export default App;
