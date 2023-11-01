@@ -18,7 +18,7 @@ function correctDate(patientsInfo) {
   patientsInfo = patientsInfo.map(patientInfo => (
     {
       ...patientInfo,
-      birthdate: dayjs(patientInfo.birthdate).format('DD-MM-YYYY')
+      birthdate: dayjs(patientInfo.birthdate).format('DD/MM/YYYY')
     }
   ));
   console.log(patientsInfo)
