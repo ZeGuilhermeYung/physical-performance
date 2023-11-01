@@ -1,25 +1,32 @@
 import status from "http-status";
-import { patientsRepositories } from "../repositories/patients.repositories";
+import { patientsRepositories } from "../repositories/patients.repositories.js";
+import { patientsServices } from "../services/patients.services.js";
 
 export async function postPatient (req, res) {
-  const { name, email, phone, gender, birthdate,
-    domSm, domIm, sports, weigth, height } = req.body;
+  const { name, email, phone, photo, gender, birthdate,
+    domSm, domIm, sports, weight, height } = req.body;
+  
+  await patientsServices.uniquePatient(name);
+
+  const image = patientsServices.checkPhoto(photo);
 
   await patientsRepositories.
-    insertPatients(name, email, phone, gender, birthdate,
-      domSm, domIm, sports, weigth, height);
+    insertPatient(name, email, phone, image, gender, birthdate,
+      domSm, domIm, sports, weight, height);
 
   return res.sendStatus(status.CREATED);
 };
 
 export async function getPatients (req, res) {
-  const patients = await patientsRepositories.getPatients();
+  let patients = await patientsRepositories.getPatients();
+
+  patients = await patientsServices.correctDate(patients);
 
   return res.status(status.CREATED).send(patients);
 };
 
 export async function getPatient (req, res) {
-  const { id } = req.body;
+  const { id } = req.params;
 
   const patient = await patientsRepositories.getPatient(id);
 

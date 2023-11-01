@@ -1,4 +1,4 @@
-import functionalEvRepositories from "../repositories/functionalEvs.repositories";
+import functionalEvRepositories from "../repositories/functionalEvs.repositories.js";
 
 async function mountFunctEv (body) {
   const { type, patientId, evOrder, observation } = body;
