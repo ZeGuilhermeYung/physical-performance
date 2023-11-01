@@ -1,4 +1,4 @@
-import mountFunctEv from "../services/functionalEvs.services";
+import mountFunctEv from "../services/functionalEvs.services.js";
 
 async function createFunctEv (req, res) {
   const body = req.body;

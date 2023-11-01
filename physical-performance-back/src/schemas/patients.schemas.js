@@ -1,6 +1,7 @@
 import joi from 'joi';
 
-const emailRegex = new RegExp(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)*(\.[a-z]{2,})$/);
+const emailRegex =
+    new RegExp(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)*(\.[a-z]{2,})$/);
 //const photoRegex = /(http[s]?:\/\/.*\.(?:png|jpg|gif|svg|jpeg))/i;
 
 const patientSchema = joi.object({
@@ -10,8 +11,8 @@ const patientSchema = joi.object({
     photo: joi.string().empty(''),
     gender: joi.string().min(1).max(1).required(),
     birthdate: joi.date().iso().max('now'),
-    domsm: joi.string().min(3).max(10).required(),
-    domim: joi.string().min(3).max(10).required(),
+    domSm: joi.string().min(3).max(10).required(),
+    domIm: joi.string().min(3).max(10).required(),
     sports: joi.string().empty(''),
     weight: joi.number().min(1).max(3).required(),
     height: joi.number().min(1).max(3).required()
