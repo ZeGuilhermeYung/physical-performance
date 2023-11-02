@@ -18,6 +18,13 @@ async function getPatients() {
   return result.rows;
 }
 
+async function findPatients(name) {
+  const query = `SELECT id, name, gender, birthdate FROM patients
+    WHERE unaccent (LOWER(name)) ~* unaccent (LOWER($1));`;
+  const result = await db.query(query, [name]);
+  return result.rows;
+}
+
 async function getPatientByName(name) {
   const query = `SELECT name FROM patients WHERE name = $1;`;
   const result = await db.query(query, [name]);
@@ -33,6 +40,7 @@ async function getPatient(id) {
 export const patientsRepositories = {
   insertPatient,
   getPatients,
+  findPatients,
   getPatientByName,
   getPatient
 }

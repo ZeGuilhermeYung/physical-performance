@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { conflictError } from "../errors/errors.js";
+import { conflictError, notFound } from "../errors/errors.js";
 import { patientsRepositories } from "../repositories/patients.repositories.js";
 
 async function uniquePatient(name) {
@@ -28,7 +28,18 @@ function returnAge(birthdate) {
   return age;
 }
 
-function correctDate(patientsInfo) {
+async function mountPatientsInfo(name) {
+  let patientsInfo;
+
+  if (name) {
+    patientsInfo = await patientsRepositories.findPatients(name);
+
+    if (!patientsInfo)
+      throw notFound("Nenhum paciente encontrado com este nome!");
+  } else {
+    patientsInfo = await patientsRepositories.getPatients();
+  }
+
   patientsInfo = patientsInfo.map(patientInfo => (
     {
       id: patientInfo.id,
@@ -37,7 +48,6 @@ function correctDate(patientsInfo) {
       age: returnAge(dayjs(patientInfo.birthdate).format('DD/MM/YYYY'))
     }
   ));
-  console.log(patientsInfo)
   return patientsInfo;
 }
 
@@ -45,5 +55,5 @@ export const patientsServices = {
   uniquePatient,
   checkPhoto,
   returnAge,
-  correctDate
+  mountPatientsInfo
 }

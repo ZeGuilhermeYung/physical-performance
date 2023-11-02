@@ -19,9 +19,9 @@ export async function postPatient (req, res) {
 };
 
 export async function getPatients (req, res) {
-  let patients = await patientsRepositories.getPatients();
+  const { name } = req.query;
 
-  patients = await patientsServices.correctDate(patients);
+  const patients = await patientsServices.mountPatientsInfo(name);
 
   return res.status(status.CREATED).send(patients);
 };
