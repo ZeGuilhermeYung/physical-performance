@@ -1,4 +1,5 @@
 import status from "http-status";
+import dayjs from "dayjs";
 import { patientsRepositories } from "../repositories/patients.repositories.js";
 import { patientsServices } from "../services/patients.services.js";
 
@@ -28,7 +29,12 @@ export async function getPatients (req, res) {
 export async function getPatient (req, res) {
   const { id } = req.params;
 
-  const patient = await patientsRepositories.getPatient(id);
+  let patient = await patientsRepositories.getPatient(id);
+
+  patient.birthdate = dayjs(patient.birthdate).format('DD/MM/YYYY');
+
+  patient =
+    {...patient, age: patientsServices.returnAge(patient.birthdate)};
 
   return res.status(status.CREATED).send(patient);
 };

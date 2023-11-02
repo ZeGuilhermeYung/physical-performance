@@ -14,11 +14,27 @@ function checkPhoto (photo) {
   return photo;
 }
 
+function returnAge(birthdate) {
+  const parseBirthdate = birthdate.split("/");
+  const birthDay = parseInt(parseBirthdate[0]);
+  const birthMonth = parseInt(parseBirthdate[1]) - 1;
+  const birthYear = parseInt(parseBirthdate[2]);
+  const birthdateObj = new Date(birthYear, birthMonth, birthDay);
+  const today = new Date();
+
+  const age = Math.floor(
+    (today - birthdateObj) / (1000 * 60 * 60 * 24 * 365.25));
+
+  return age;
+}
+
 function correctDate(patientsInfo) {
   patientsInfo = patientsInfo.map(patientInfo => (
     {
-      ...patientInfo,
-      birthdate: dayjs(patientInfo.birthdate).format('DD/MM/YYYY')
+      id: patientInfo.id,
+      name: patientInfo.name,
+      gender: patientInfo.gender,
+      age: returnAge(dayjs(patientInfo.birthdate).format('DD/MM/YYYY'))
     }
   ));
   console.log(patientsInfo)
@@ -28,5 +44,6 @@ function correctDate(patientsInfo) {
 export const patientsServices = {
   uniquePatient,
   checkPhoto,
+  returnAge,
   correctDate
 }
