@@ -1,15 +1,13 @@
+import status from "http-status";
 import mountFunctEv from "../services/functionalEvs.services.js";
 
-async function createFunctEv (req, res) {
+async function postFunctEv (req, res) {
   const body = req.body;
+  const { patientId, evOrder } = req.params;
 
-  try {
-      await mountFunctEv(body);
+  await mountFunctEv(body, patientId, evOrder);
 
-      return res.sendStatus(201);
-  } catch (error) {
-      return res.status(500).send(error);
-  };
+  return res.sendStatus(status.CREATED);
 };
 
-export default createFunctEv;
+export default postFunctEv;

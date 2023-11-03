@@ -2,6 +2,7 @@ import { unprocessableEntity } from "../errors/errors.js";
 
 function validateSchema (schema) {
   return (req, res, next) => {
+    //console.log(schema)
     const validation = schema.validate (
       req.body,
       { abortEarly: false }

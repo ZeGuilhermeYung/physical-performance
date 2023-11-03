@@ -7,7 +7,7 @@ async function uniquePatient(name) {
   if (patientExists) throw conflictError("Este paciente já existe nos registros!");
 }
 
-function checkPhoto (photo) {
+function checkPhoto(photo) {
   const defaultUserImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/768px-User-avatar.svg.png";
 
   if (!photo) return defaultUserImage;
@@ -51,9 +51,21 @@ async function mountPatientsInfo(name) {
   return patientsInfo;
 }
 
+async function mountPatient(id) {
+  let patient = await patientsRepositories.getPatient(id);
+
+  patient.birthdate = dayjs(patient.birthdate).format('DD/MM/YYYY');
+
+  patient =
+    {...patient, age: patientsServices.returnAge(patient.birthdate)};
+
+  return patient;
+}
+
 export const patientsServices = {
   uniquePatient,
   checkPhoto,
   returnAge,
-  mountPatientsInfo
+  mountPatientsInfo,
+  mountPatient
 }
