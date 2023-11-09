@@ -17,9 +17,9 @@ export default function Header () {
 const Top = styled.header`
 width: 100%;
 height: 70px;
-background-color: #162539;
-box-shadow: 0px 4px 4px #0C1D37;
-padding: 10px 18px 10px 28px;
+background-color: #526A89;
+//box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+padding: 10px 28px 10px 60px;
 display: flex;
 justify-content: space-between;
 align-items: center;

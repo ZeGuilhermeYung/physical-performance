@@ -58,8 +58,7 @@ export default function Aside () {
             <h4>Esportes:</h4>
             <h4>{patient.sports}</h4>
           </li>
-        </ul>
-        
+        </ul> 
       </PatientInfo>
     </PatientMenu>
   );  
@@ -69,6 +68,7 @@ const PatientMenu = styled.aside`
   width: 400px;
   height: 100%;
   background-color: #2C405E;
+  box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   align-items: center;
