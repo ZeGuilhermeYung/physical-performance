@@ -1,17 +1,13 @@
 import styled from "styled-components";
-import { useContext } from "react";
-import UserContext from "../../context/UserContext";
-import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+import photo from "../../assets/img/pedro_felix_profile.enc"
 
-export default function Header ( {logoutButton, setLogoutButton} ) {
-  const { username, photo } = useContext(UserContext).authData;
+export default function Header () {
 
   return (
     <Top>
-      <h1>linkr</h1>
-      <button onClick={() => setLogoutButton(!logoutButton)} >
-        { !logoutButton ? <UpArrow/> : <DownArrow/> }
-        <h6>Olá,<br/>{username}!</h6>
+      <h1>Pro Sport</h1>
+      <button>
+        <h6>Olá,<br/>Pedro Félix!</h6>
         <img data-test="avatar" src={photo} alt="user profile image" />
       </button>
     </Top>       
@@ -21,8 +17,8 @@ export default function Header ( {logoutButton, setLogoutButton} ) {
 const Top = styled.header`
 width: 100%;
 height: 70px;
-background-color: #151515;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+background-color: #162539;
+box-shadow: 0px 4px 4px #0C1D37;
 padding: 10px 18px 10px 28px;
 display: flex;
 justify-content: space-between;
@@ -54,19 +50,9 @@ button h6 {
   height: auto;
   max-width: 200px;
   max-height: 50px;
-  font-size: 14px;
+  font-size: 15px;
   text-align: center;
   margin-right: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
 }`
-
-const DownArrow = styled(MdKeyboardArrowDown)`
-  font-size: 40px;
-  color: #FFFFFF;
-  margin-right: 10px;`
-
-const UpArrow = styled(MdKeyboardArrowUp)`
-  font-size: 40px;
-  color: #FFFFFF;
-  margin-right: 10px;`

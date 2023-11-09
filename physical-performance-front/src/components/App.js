@@ -1,37 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import GlobalStyle from "./GlobalStyle";
 import UserContext from "../context/UserContext";
 import HomePage from "./home/HomePage";
+import Patients from "./private/patients/Patients";
+import Evaluations from "./private/evaluations/Evaluations";
+import FunctionalEv from "./private/FunctionalEv";
 
 export default function App () {
-  const [token, setToken] = useState(localStorage.getItem("userData"));
-  const [authData, setAuthData] = useState(JSON.parse(localStorage.getItem("userData")));
-  
-  useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("userData"));
-    setAuthData(userData);
-  }, [token]);
-
   return (
     <>
       <GlobalStyle />
       <BrowserRouter>
-        <AuthContext.Provider value={{ token, setToken }}>
-        <UserContext.Provider value={{ authData, setAuthData }}>
           <Routes>
-            <Route path="/" element={<SignIn />} />
-            <Route path="/sign-up" element={<SignUp />} />
             <Route
-              path="/timeline"
+              path="/patients"
               element={
                 <HomePage>
-                  
+                  <Patients />
+                </HomePage>
+              } />
+            <Route
+              path="/patients/:patientId/evaluations"
+              element={
+                <HomePage>
+                  <Evaluations />
+                </HomePage>
+              } />
+              <Route
+              path="/patients/:patientId/functional/:evOrder"
+              element={
+                <HomePage>
+                  <FunctionalEv />
                 </HomePage>
               } />
           </Routes>
-        </UserContext.Provider>
-        </AuthContext.Provider>
       </BrowserRouter>
     </>
   );

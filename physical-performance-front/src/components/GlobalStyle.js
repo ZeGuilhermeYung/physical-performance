@@ -65,15 +65,15 @@ button {
 
 body {
   width: 100%;
-  background-color: #333333;
-  font-family: 'Oswald', sans-serif;
+  background-color: #20324E;
+  font-family: 'Teko', sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
 h1 {
   color: #FFFFFF;
-  font-family: 'Passion One';
+  font-family: 'Bebas Neue';
   font-size: 49px;
   font-weight: 700;
   letter-spacing: 2.45px;
@@ -90,18 +90,18 @@ h3 {
 }
 h4 {
   color: #FFFFFF;
-  font-family: 'Lato';
-  font-size: 19px;
+  //font-family: 'Lato';
+  font-size: 23px;
 }
 h5 {
-  color: #B7B7B7;
-  font-family: 'Lato';
+  color: #FFFFFF;
+  //font-family: 'Lato';
   font-size: 17px;
 }
 h6 {
   color: #FFFFFF;
   text-align: center;
-  font-family: 'Lato';
+  //font-family: 'Lato';
   font-size: 11px;
   text-align: left;
 }

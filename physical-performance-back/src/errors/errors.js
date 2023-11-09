@@ -3,9 +3,9 @@ export function conflictError (message) {
 }
 
 export function notFound (message) {
-  return { type: "NOT FOUND", message }
+  return { type: "NOT_FOUND", message }
 }
 
 export function unprocessableEntity (message) {
-  return { type: "UNPROCESSABLE ENTITY", message }
+  return { type: "UNPROCESSABLE_ENTITY", message }
 }
