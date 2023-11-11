@@ -1,20 +1,21 @@
 import dayjs from "dayjs";
-import { conflictError, notFound } from "../errors/errors.js";
-import { patientsRepositories } from "../repositories/patients.repositories.js";
+import { conflictError, notFound } from "../errors/errors";
+import { patientsRepositories } from "../repositories/patients.repositories";
+import { Patient, PatientAge, PatientCreateInfo, PatientInfo } from "protocols/patients.protocols";
 
-async function uniquePatient(name) {
+async function uniquePatient(name: string): Promise<void> {
   const patientExists = await patientsRepositories.getPatientByName(name);
   if (patientExists) throw conflictError("Este paciente já existe nos registros!");
 }
 
-function checkPhoto(photo) {
+function checkPhoto(photo: string | null): string {
   const defaultUserImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/768px-User-avatar.svg.png";
 
   if (!photo) return defaultUserImage;
   return photo;
 }
 
-function returnAge(birthdate) {
+function returnAge(birthdate: string): number {
   const parseBirthdate = birthdate.split("/");
   const birthDay = parseInt(parseBirthdate[0]);
   const birthMonth = parseInt(parseBirthdate[1]) - 1;
@@ -23,13 +24,15 @@ function returnAge(birthdate) {
   const today = new Date();
 
   const age = Math.floor(
-    (today - birthdateObj) / (1000 * 60 * 60 * 24 * 365.25));
+    (today.getTime() - birthdateObj.getTime()) / (1000 * 60 * 60 * 24 * 365.25)
+  );
+  
 
   return age;
 }
 
-async function mountPatientsInfo(name) {
-  let patientsInfo;
+async function mountPatientsInfo(name?: string): Promise<PatientInfo[]> {
+  let patientsInfo: PatientCreateInfo[];
 
   if (name) {
     patientsInfo = await patientsRepositories.findPatients(name);
@@ -40,7 +43,7 @@ async function mountPatientsInfo(name) {
     patientsInfo = await patientsRepositories.getPatients();
   }
 
-  patientsInfo = patientsInfo.map(patientInfo => (
+  const formattedPatientsInfo: PatientInfo[] = patientsInfo.map(patientInfo => (
     {
       id: patientInfo.id,
       name: patientInfo.name,
@@ -48,18 +51,17 @@ async function mountPatientsInfo(name) {
       age: returnAge(dayjs(patientInfo.birthdate).format('DD/MM/YYYY'))
     }
   ));
-  return patientsInfo;
+  return formattedPatientsInfo;
 }
 
-async function mountPatient(id) {
-  let patient = await patientsRepositories.getPatient(id);
+async function mountPatient(id: string): Promise<Patient> {
+  const patient: Patient = await patientsRepositories.getPatient(parseInt(id));
 
   patient.birthdate = dayjs(patient.birthdate).format('DD/MM/YYYY');
 
-  patient =
-    {...patient, age: patientsServices.returnAge(patient.birthdate)};
+  const patientAge: PatientAge = { ...patient, age: returnAge(patient.birthdate) };
 
-  return patient;
+  return patientAge;
 }
 
 export const patientsServices = {
@@ -68,4 +70,4 @@ export const patientsServices = {
   returnAge,
   mountPatientsInfo,
   mountPatient
-}
+};

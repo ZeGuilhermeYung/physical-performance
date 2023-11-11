@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { getPatient, getPatients, postPatient } from "../controllers/patients.controllers.js";
-import validateSchema from "../middlewares/validate.schema.js";
-import patientSchema from "../schemas/patients.schemas.js";
+import { getPatient, getPatients, postPatient } from "../controllers/patients.controllers";
+import validateSchema from "../middlewares/validate.schema";
+import patientSchema from "../schemas/patients.schemas";
 
 const patientsRouter = Router();
 
