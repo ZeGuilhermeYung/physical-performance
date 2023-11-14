@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from "./GlobalStyle";
-import UserContext from "../context/UserContext";
+import TitleContext from "../context/TitleContext";
 import HomePage from "./home/HomePage";
 import Patients from "./private/patients/Patients";
 import Evaluations from "./private/evaluations/Evaluations";
 import FunctionalEv from "./private/FunctionalEv";
 
 export default function App () {
+  const [title, setTitle] = useState("");
+
   return (
     <>
       <GlobalStyle />
       <BrowserRouter>
+        <TitleContext.Provider value={{ title, setTitle }}>
           <Routes>
             <Route
               path="/patients"
@@ -35,6 +38,7 @@ export default function App () {
                 </HomePage>
               } />
           </Routes>
+        </TitleContext.Provider>
       </BrowserRouter>
     </>
   );

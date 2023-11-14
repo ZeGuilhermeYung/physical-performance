@@ -1,36 +1,30 @@
-import { CreateFunctionalEv } from "protocols/functionalEvs.protocols";
+import { CreateFunctEvFunction, CreateFunctionalEv } from "protocols/functionalEvs.protocols";
 import prisma from "../database/db";
 
-async function insertFunctEv(params: CreateFunctionalEv) {
-  return prisma[params.type].create({
+const createFunctEvFunction: CreateFunctEvFunction = {
+  functEvs01: prisma.functEvs01.create,
+  functEvs02: prisma.functEvs02.create,
+  functEvs03: prisma.functEvs03.create,
+  functEvs04: prisma.functEvs04.create,
+  functEvs05: prisma.functEvs05.create,
+  functEvs06: prisma.functEvs06.create,
+  functEvs07: prisma.functEvs07.create,
+  functEvs08: prisma.functEvs08.create,
+};
+
+async function insertFunctEv(body: CreateFunctionalEv) {
+  const data = Object.fromEntries(
+    Object.entries(body)
+      .filter(([key]) => key !== "type")
+      .map(([key, value]) => [key, value])
+  );
+
+  const createFunction = createFunctEvFunction[body.type];
+
+  return createFunction({
     data: {
-      type: params.type,
-      patientId: params.patientId,
-      evOrder: params.evOrder,
-      iml01: params.iml01,
-      imr01: params.imr01,
-      iml02: params.iml02,
-      imr02: params.imr02,
-      iml03: params.iml03,
-      imr03: params.imr03,
-      iml04: params.iml04,
-      imr04: params.imr04,
-      iml05dist: params.iml05dist,
-      imr05dist: params.imr05dist,
-      iml05ang: params.iml05ang,
-      imr05ang: params.imr05ang,
-      iml06quad: params.iml06quad,
-      imr06quad: params.imr06quad,
-      iml06isqui: params.iml06isqui,
-      imr06isqui: params.imr06isqui,
-      cmj07: params.cmj07,
-      iml07sh: params.iml07sh,
-      imr07sh: params.imr07sh,
-      cmj08: params.cmj08,
-      sj08: params.sj08,
-      iml08cmjuni: params.iml08cmjuni,
-      imr08cmjuni: params.imr08cmjuni,
-      observation: params.observation,
+      type: body.type,
+      ...data,
     },
   });
 }

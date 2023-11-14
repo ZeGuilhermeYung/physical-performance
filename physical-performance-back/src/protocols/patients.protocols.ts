@@ -18,8 +18,9 @@ export type Patient = Omit<PatientAge, "age">
 
 export type CreatePatient = Omit<Patient, "id">;
 
-export type PatientInfo = Omit<Patient,
-  "email" | "phone" | "photo" | "birthdate" | "domSm" | "domIm" | "sports" | "weight" | "height" >;
+export type CreatePatientInfo = Pick<Patient,
+  "id" | "name" | "gender" | "birthdate">;
 
-export type PatientCreateInfo = Omit<Patient,
-  "email" | "phone" | "photo" | "age" | "domSm" | "domIm" | "sports" | "weight" | "height">;
+export type PatientInfo = Pick<PatientAge,
+  "id" | "name" | "gender" | "age">;
+

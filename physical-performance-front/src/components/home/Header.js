@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import photo from "../../assets/img/pedro_felix_profile.enc"
+import photo from "../../assets/img/pedro_felix_profile.enc";
+import logo from "../../assets/img/logo-pro-sport.png";
 
 export default function Header () {
 
   return (
     <Top>
-      <h1>Pro Sport</h1>
+      <img src={logo} alt="Logo Pro Sport" />
       <button>
         <h6>Olá,<br/>Pedro Félix!</h6>
         <img data-test="avatar" src={photo} alt="user profile image" />
@@ -18,7 +19,6 @@ const Top = styled.header`
 width: 100%;
 height: 70px;
 background-color: #526A89;
-//box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 padding: 10px 28px 10px 60px;
 display: flex;
 justify-content: space-between;
@@ -28,6 +28,10 @@ left: 0px;
 top: 0px;
 z-index: 5;
 box-sizing: border-box;
+
+img {
+  height: 65px;
+}
 
 button {
   width: auto;

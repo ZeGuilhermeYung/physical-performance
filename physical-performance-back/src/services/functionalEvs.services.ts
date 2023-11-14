@@ -1,36 +1,9 @@
+import { CreateFunctionalEv } from "protocols/functionalEvs.protocols";
 import { conflictError, notFound, unprocessableEntity } from "../errors/errors";
 import functionalEvRepositories from "../repositories/functionalEvs.repositories";
 import { patientsRepositories } from "../repositories/patients.repositories";
 
-interface Body {
-  type: string;
-  observation?: string;
-  iml01?: number;
-  imr01?: number;
-  iml02?: number;
-  imr02?: number;
-  iml03?: string;
-  imr03?: string;
-  iml04?: number;
-  imr04?: number;
-  iml05dist?: number;
-  imr05dist?: number;
-  iml05ang?: number;
-  imr05ang?: number;
-  iml06quad?: number;
-  imr06quad?: number;
-  iml06isqui?: number;
-  imr06isqui?: number;
-  cmj07?: number;
-  iml07sh?: number;
-  imr07sh?: number;
-  cmj08?: number;
-  sj08?: number;
-  iml08cmjuni?: number;
-  imr08cmjuni?: number;
-}
-
-async function mountFunctEv(body: Body, patientId: string, evOrder: string) {
+async function mountFunctEv(body: CreateFunctionalEv, patientId: string, evOrder: string) {
   const { type, observation } = body;
 
   if (isNaN(parseInt(patientId)) || isNaN(parseInt(evOrder))) {

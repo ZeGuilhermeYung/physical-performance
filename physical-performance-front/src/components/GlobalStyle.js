@@ -73,7 +73,7 @@ body {
 }
 h1 {
   color: #FFFFFF;
-  font-family: 'Bebas Neue';
+  font-family: 'Graduate';
   font-size: 49px;
   font-weight: 700;
   letter-spacing: 2.45px;
@@ -86,12 +86,11 @@ h2 {
 h3 {
   color: #FFFFFF;
   font-size: 27px;
-  font-weight: 700;
 }
 h4 {
   color: #FFFFFF;
   //font-family: 'Lato';
-  font-size: 23px;
+  font-size: 25px;
 }
 h5 {
   color: #FFFFFF;

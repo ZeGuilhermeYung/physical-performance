@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
 import { conflictError, notFound } from "../errors/errors";
 import { patientsRepositories } from "../repositories/patients.repositories";
-import { Patient, PatientAge, PatientCreateInfo, PatientInfo } from "protocols/patients.protocols";
+import { Patient, PatientAge, CreatePatientInfo, PatientInfo } from "protocols/patients.protocols";
 
-async function uniquePatient(name: string): Promise<void> {
+async function uniquePatient(name: string) {
   const patientExists = await patientsRepositories.getPatientByName(name);
   if (patientExists) throw conflictError("Este paciente já existe nos registros!");
 }
@@ -32,7 +32,7 @@ function returnAge(birthdate: string): number {
 }
 
 async function mountPatientsInfo(name?: string): Promise<PatientInfo[]> {
-  let patientsInfo: PatientCreateInfo[];
+  let patientsInfo: CreatePatientInfo[];
 
   if (name) {
     patientsInfo = await patientsRepositories.findPatients(name);

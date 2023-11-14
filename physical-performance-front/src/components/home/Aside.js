@@ -8,24 +8,25 @@ export default function Aside () {
   const { patientId } = useParams();
 
   useEffect(() => {
-    getPatientById(patientId)
+    if (patientId) {
+      getPatientById(patientId)
       .then(response => {
         setPatient(response.data);
       })
       .catch((error) => {
         alert(error.message);
       });
-  }, [])
-
-  return (
+    }
+  }, [patientId]);
+  
+  return patientId ? (
     <PatientMenu>
       <img src={patient.photo} alt="" />
       <PatientInfo>
+        <PatientName>
+          <h3>{patient.name}</h3>
+        </PatientName>
         <ul>
-          <li>
-            <h4>Nome:</h4>
-            <h4>{patient.name}</h4>
-          </li>
           <li>
             <h4>Sexo:</h4>
             <h4>{patient.gender}</h4>
@@ -52,7 +53,7 @@ export default function Aside () {
           </li>
           <li>
             <h4>Peso:</h4>
-            <h4>{patient.weight}Kg</h4>
+             <h4>{patient.weight}Kg</h4>
           </li>
           <li>
             <h4>Esportes:</h4>
@@ -61,11 +62,15 @@ export default function Aside () {
         </ul> 
       </PatientInfo>
     </PatientMenu>
-  );  
+  )
+  : 
+  <PatientMenu>
+    <h2>Em breve, informações aqui</h2>
+  </PatientMenu>;
 }
 
 const PatientMenu = styled.aside`
-  width: 400px;
+  width: 450px;
   height: 100%;
   background-color: #2C405E;
   box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.15);
@@ -82,8 +87,8 @@ const PatientMenu = styled.aside`
   }`
 
 const PatientInfo = styled.article`
-  width: 300px;
-  height: 400px;
+  width: 250px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -91,7 +96,7 @@ const PatientInfo = styled.article`
   box-sizing: border-box;
   ul {
     width: 100%;
-    height: 25px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -106,4 +111,19 @@ const PatientInfo = styled.article`
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
+  }
+  h3 {
+    //font-family: 'Bebas Neue';
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
   }`
+
+  const PatientName = styled.div`
+    width: 100%;
+    height: 50px;
+    display: flex;
+    margin-bottom: 50px;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;`

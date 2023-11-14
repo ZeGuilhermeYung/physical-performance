@@ -1,5 +1,6 @@
 import joi from 'joi';
 import joiDate from "@joi/date";
+import { CreatePatient } from 'protocols/patients.protocols';
 
 const joiWithDate = joi.extend(joiDate);
 
@@ -8,7 +9,7 @@ const emailRegex =
 const phoneNumberRegex = new RegExp(/^\d{8,11}$/);
 //const photoRegex = /(http[s]?:\/\/.*\.(?:png|jpg|gif|svg|jpeg))/i;
 
-const patientSchema = joi.object({
+const patientSchema = joi.object<CreatePatient>({
     name: joi.string().required(),
     email: joi.string().pattern(emailRegex).empty(''),
     phone: joi.string().pattern(phoneNumberRegex).min(8).max(13).empty(''),

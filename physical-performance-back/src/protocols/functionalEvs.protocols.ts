@@ -1,32 +1,27 @@
-export type FunctionalEv = {
-  id: number;
-  type: string;
+type Include<T, U> = T & U;
+
+export type CommonFunctionalEv = {
   patientId: number;
   evOrder: number;
-  iml01?: number;
-  imr01?: number;
-  iml02?: number;
-  imr02?: number;
-  iml03?: string;
-  imr03?: string;
-  iml04?: number;
-  imr04?: number;
-  iml05dist?: number;
-  imr05dist?: number;
-  iml05ang?: number;
-  imr05ang?: number;
-  iml06quad?: number;
-  imr06quad?: number;
-  iml06isqui?: number;
-  imr06isqui?: number;
-  cmj07?: number;
-  iml07sh?: number;
-  imr07sh?: number;
-  cmj08?: number;
-  sj08?: number;
-  iml08cmjuni?: number;
-  imr08cmjuni?: number;
   observation?: string;
 }
 
-export type CreateFunctionalEv = Omit<FunctionalEv, "id">;
+export type FunctionalEvId = {
+  id:number;
+}
+
+export type CreateFunctionalEv =
+  | CommonFunctionalEv & { type: 'functEvs01'; iml01: number; imr01: number }
+  | CommonFunctionalEv & { type: 'functEvs02'; iml02: number; imr02: number }
+  | CommonFunctionalEv & { type: 'functEvs03'; iml03: string; imr03: string }
+  | CommonFunctionalEv & { type: 'functEvs04'; iml04: number; imr04: number }
+  | CommonFunctionalEv & { type: 'functEvs05'; iml05dist: number; imr05dist: number; iml05ang: number; imr05ang: number }
+  | CommonFunctionalEv & { type: 'functEvs06'; iml06quad: number; imr06quad: number; iml06isqui: number; imr06isqui: number }
+  | CommonFunctionalEv & { type: 'functEvs07'; cmj07: number; iml07sh: number; imr07sh: number }
+  | CommonFunctionalEv & { type: 'functEvs08'; cmj08: number; sj08: number; iml08cmjuni: number; imr08cmjuni: number };
+
+export type FunctionalEv = Include<FunctionalEvId, CreateFunctionalEv>;
+
+export type CreateFunctEvFunction = {
+  [key: string]: (data: any) => Promise<any>;
+};
