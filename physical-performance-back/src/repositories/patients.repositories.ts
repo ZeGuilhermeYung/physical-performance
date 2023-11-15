@@ -1,9 +1,14 @@
 import prisma from "../database/db";
-import { CreatePatient } from "protocols/patients.protocols";
+import { CreatePatient, Patient } from "../protocols/patients.protocols";
 
-async function insertPatient(data: CreatePatient) {
+async function insertPatient(data: CreatePatient): Promise<Patient> {
+  const formattedData = {
+    ...data,
+    birthdate: new Date(data.birthdate),
+  };
+
   return prisma.patients.create({
-    data,
+    data: formattedData,
   });
 }
 
@@ -43,5 +48,5 @@ export const patientsRepositories = {
   getPatients,
   findPatients,
   getPatientByName,
-  getPatient,
+  getPatient
 };

@@ -64,11 +64,6 @@ const functEv08Schema = joi.object<CreateFunctionalEv>({
   observation: joi.string().empty('')
 });
 
-const functIdOrderSchema = joi.object<CreateFunctionalEv>({
-  patientId: joi.number().required(),
-  evOrder: joi.number().required()
-});
-
 const functEvSchemas = {
   functEv01Schema,
   functEv02Schema,
@@ -77,8 +72,7 @@ const functEvSchemas = {
   functEv05Schema,
   functEv06Schema,
   functEv07Schema,
-  functEv08Schema,
-  functIdOrderSchema
+  functEv08Schema
 } ;
 
 export { functEvSchemas };

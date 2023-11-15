@@ -23,4 +23,3 @@ export type CreatePatientInfo = Pick<Patient,
 
 export type PatientInfo = Pick<PatientAge,
   "id" | "name" | "gender" | "age">;
-

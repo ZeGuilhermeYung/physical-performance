@@ -15,7 +15,7 @@ const patientSchema = joi.object<CreatePatient>({
     phone: joi.string().pattern(phoneNumberRegex).min(8).max(13).empty(''),
     photo: joi.string().empty(''),
     gender: joi.string().min(1).max(1).required(),
-    birthdate: joiWithDate.date().format("DD-MM-YYYY").max('now').required(),
+    birthdate: joiWithDate.date().format("YYYY-MM-DD").max('now').required(),
     domSm: joi.string().min(3).max(10).required(),
     domIm: joi.string().min(3).max(10).required(),
     sports: joi.string().empty(''),

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import status from 'http-status';
 import { patientsRepositories } from '../repositories/patients.repositories';
 import { patientsServices } from '../services/patients.services';
-import { CreatePatient } from 'protocols/patients.protocols';
+import { CreatePatient } from '../protocols/patients.protocols';
 
 export async function postPatient(req: Request, res: Response) {
   const patient = req.body as CreatePatient;

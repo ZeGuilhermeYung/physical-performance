@@ -1,13 +1,11 @@
 type Include<T, U> = T & U;
 
 export type CommonFunctionalEv = {
-  patientId: number;
-  evOrder: number;
   observation?: string;
 }
 
 export type FunctionalEvId = {
-  id:number;
+  id: number;
 }
 
 export type CreateFunctionalEv =

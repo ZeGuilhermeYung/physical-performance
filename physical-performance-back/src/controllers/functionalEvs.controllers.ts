@@ -4,9 +4,8 @@ import mountFunctEv from '../services/functionalEvs.services';
 
 async function postFunctEv(req: Request, res: Response) {
   const body = req.body;
-  const { patientId, evOrder } = req.params;
 
-  await mountFunctEv(body, patientId, evOrder);
+  await mountFunctEv(body);
 
   res.sendStatus(status.CREATED);
 }

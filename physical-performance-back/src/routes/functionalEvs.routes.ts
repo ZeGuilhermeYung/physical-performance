@@ -1,6 +1,6 @@
 import { Router } from "express";
 import postFunctEv from "../controllers/functionalEvs.controllers";
-import validateSchema from "../middlewares/validate.schema";
+import { validateSchema } from "../middlewares/validate.schema";
 import { functEvSchemas } from "../schemas/functionalEvs.schemas";
 
 const functEvsRouter = Router();

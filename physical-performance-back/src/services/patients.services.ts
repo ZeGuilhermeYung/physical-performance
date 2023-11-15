@@ -1,7 +1,10 @@
 import dayjs from "dayjs";
+import utc from 'dayjs/plugin/utc'; 
 import { conflictError, notFound } from "../errors/errors";
 import { patientsRepositories } from "../repositories/patients.repositories";
-import { Patient, PatientAge, CreatePatientInfo, PatientInfo } from "protocols/patients.protocols";
+import { Patient, PatientAge, CreatePatientInfo, PatientInfo } from "../protocols/patients.protocols";
+
+dayjs.extend(utc);
 
 async function uniquePatient(name: string) {
   const patientExists = await patientsRepositories.getPatientByName(name);
@@ -57,7 +60,7 @@ async function mountPatientsInfo(name?: string): Promise<PatientInfo[]> {
 async function mountPatient(id: string): Promise<Patient> {
   const patient: Patient = await patientsRepositories.getPatient(parseInt(id));
 
-  patient.birthdate = dayjs(patient.birthdate).format('DD/MM/YYYY');
+  patient.birthdate = dayjs(patient.birthdate).utc().format('DD/MM/YYYY');
 
   const patientAge: PatientAge = { ...patient, age: returnAge(patient.birthdate) };
 

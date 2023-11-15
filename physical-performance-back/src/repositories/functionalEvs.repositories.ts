@@ -1,4 +1,4 @@
-import { CreateFunctEvFunction, CreateFunctionalEv } from "protocols/functionalEvs.protocols";
+import { CreateFunctEvFunction, CreateFunctionalEv, FunctionalEv } from "protocols/functionalEvs.protocols";
 import prisma from "../database/db";
 
 const createFunctEvFunction: CreateFunctEvFunction = {
@@ -12,32 +12,25 @@ const createFunctEvFunction: CreateFunctEvFunction = {
   functEvs08: prisma.functEvs08.create,
 };
 
-async function insertFunctEv(body: CreateFunctionalEv) {
+async function insertFunctEv(body: CreateFunctionalEv): Promise<number>{
   const data = Object.fromEntries(
     Object.entries(body)
       .filter(([key]) => key !== "type")
       .map(([key, value]) => [key, value])
   );
 
-  const createFunction = createFunctEvFunction[body.type];
-
-  return createFunction({
+  const functEv: FunctionalEv = await createFunctEvFunction[body.type]({
     data: {
       type: body.type,
       ...data,
     },
   });
-}
 
-async function findFunctEv(type: string, patientId: number, evOrder: number) {
-  return prisma[type].findFirst({
-    where: { patientId, evOrder },
-  });
+  return functEv.id;
 }
 
 const functionalEvRepositories = {
-  insertFunctEv,
-  findFunctEv,
+  insertFunctEv
 };
 
 export default functionalEvRepositories;
