@@ -1,30 +1,13 @@
 import { Router } from "express";
-import postFunctEv from "../controllers/functionalEvs.controllers";
-import { validateSchema } from "../middlewares/validate.schema";
+import { postFunctEv, updateFunctEv } from "../controllers/functionalEvs.controllers";
 import { functEvSchemas } from "../schemas/functionalEvs.schemas";
+import selectEvSchema from "../middlewares/selectEvSchema";
 
 const functEvsRouter = Router();
 
-const functEvsRoutes = [
-  'functEvs01',
-  'functEvs02',
-  'functEvs03',
-  'functEvs04',
-  'functEvs05',
-  'functEvs06',
-  'functEvs07',
-  'functEvs08',
-];
+functEvsRouter.post('/patients/:patientId/:evType/:evaluationId/:evCategory', selectEvSchema(functEvSchemas), postFunctEv);
+functEvsRouter.patch('/patients/:patientId/:evType/:evaluationId/:evCategory/:functEvId', updateFunctEv);
 
-functEvsRoutes.forEach((functEv) => {
-  const route = `/patients/:patientId/functional/:evOrder/${functEv}`;
-  const functEvSchema = functEvSchemas[`functEv${functEv.slice(-2)}Schema`];
-
-  functEvsRouter.post(route, validateSchema(functEvSchema), postFunctEv);
-});
 //functEvsRouter.get('/patients/:id/functional/:evaluation', getAllFunctEvs);
-//functEvsRouter.patch('/patients/:id/functional/:evaluation', validateSchema(updatePostsSchemas), changeFunctEv);
-//unctEvsRouter.delete('/patients/:id/functional/:evaluation', removeFunctEv);
-
 
 export default functEvsRouter;

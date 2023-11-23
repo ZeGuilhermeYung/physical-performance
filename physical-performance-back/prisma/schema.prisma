@@ -7,121 +7,113 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model functionalEvaluations {
-  id           Int         @id @default(autoincrement())
-  patientId    Int
-  evOrder      Int
-  createdAt    DateTime    @default(now()) @db.Timestamp(0)
-  patients     patients?   @relation(fields: [patientId], references: [id])
-  functEvs01Id Int?        @unique
-  functEvs01   functEvs01? @relation(fields: [functEvs01Id], references: [id])
-  functEvs02Id Int?        @unique
-  functEvs02   functEvs02? @relation(fields: [functEvs02Id], references: [id])
-  functEvs03Id Int?        @unique
-  functEvs03   functEvs03? @relation(fields: [functEvs03Id], references: [id])
-  functEvs04Id Int?        @unique
-  functEvs04   functEvs04? @relation(fields: [functEvs04Id], references: [id])
-  functEvs05Id Int?        @unique
-  functEvs05   functEvs05? @relation(fields: [functEvs05Id], references: [id])
-  functEvs06Id Int?        @unique
-  functEvs06   functEvs06? @relation(fields: [functEvs06Id], references: [id])
-  functEvs07Id Int?        @unique
-  functEvs07   functEvs07? @relation(fields: [functEvs07Id], references: [id])
-  functEvs08Id Int?        @unique
-  functEvs08   functEvs08? @relation(fields: [functEvs08Id], references: [id])
+model evaluations {
+  id         Int         @id @default(autoincrement())
+  patientId  Int         @unique
+  evType     String      @db.VarChar(50)
+  createdAt  DateTime    @default(now()) @db.Timestamp(0)
+  patients   patients?   @relation(fields: [patientId], references: [id])
+  functEvs01 functEvs01?
+  functEvs02 functEvs02?
+  functEvs03 functEvs03?
+  functEvs04 functEvs04?
+  functEvs05 functEvs05?
+  functEvs06 functEvs06?
+  functEvs07 functEvs07?
+  functEvs08 functEvs08?
 }
 
 model functEvs01 {
-  id                    Int                    @id @default(autoincrement())
-  type                  String                 @db.VarChar(10)
-  iml01                 Int
-  imr01                 Int
-  observation           String?                @db.VarChar(255)
-  functionalEvaluations functionalEvaluations?
+  id           Int          @id @default(autoincrement())
+  iml01        Int
+  imr01        Int
+  observation  String?      @db.VarChar(255)
+  evaluationId Int          @unique
+  evaluations  evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
 }
 
 model functEvs02 {
-  id                    Int                    @id @default(autoincrement())
-  type                  String                 @db.VarChar(10)
-  iml02                 Int
-  imr02                 Int
-  observation           String?                @db.VarChar(255)
-  functionalEvaluations functionalEvaluations?
+  id           Int          @id @default(autoincrement())
+  iml02        Int
+  imr02        Int
+  observation  String?      @db.VarChar(255)
+  evaluationId Int          @unique
+  evaluations  evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
 }
 
 model functEvs03 {
-  id                    Int                    @id @default(autoincrement())
-  type                  String                 @db.VarChar(10)
-  iml03                 String                 @db.VarChar(10)
-  imr03                 String                 @db.VarChar(10)
-  observation           String?                @db.VarChar(255)
-  functionalEvaluations functionalEvaluations?
+  id           Int          @id @default(autoincrement())
+  iml03        String       @db.VarChar(10)
+  imr03        String       @db.VarChar(10)
+  observation  String?      @db.VarChar(255)
+  evaluationId Int          @unique
+  evaluations  evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
 }
 
 model functEvs04 {
-  id                    Int                    @id @default(autoincrement())
-  type                  String                 @db.VarChar(10)
-  iml04                 Int
-  imr04                 Int
-  observation           String?                @db.VarChar(255)
-  functionalEvaluations functionalEvaluations?
+  id           Int          @id @default(autoincrement())
+  iml04        Int
+  imr04        Int
+  observation  String?      @db.VarChar(255)
+  evaluationId Int          @unique
+  evaluations  evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
 }
 
 model functEvs05 {
-  id                    Int                    @id @default(autoincrement())
-  type                  String                 @db.VarChar(10)
-  iml05dist             Decimal                @db.Decimal(5, 1)
-  imr05dist             Decimal                @db.Decimal(5, 1)
-  iml05ang              Int
-  imr05ang              Int
-  observation           String?                @db.VarChar(255)
-  functionalEvaluations functionalEvaluations?
+  id           Int          @id @default(autoincrement())
+  iml05dist    Decimal      @db.Decimal(5, 1)
+  imr05dist    Decimal      @db.Decimal(5, 1)
+  iml05ang     Int
+  imr05ang     Int
+  observation  String?      @db.VarChar(255)
+  evaluationId Int          @unique
+  evaluations  evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
 }
 
 model functEvs06 {
-  id                    Int                    @id @default(autoincrement())
-  type                  String                 @db.VarChar(10)
-  iml06quad             Decimal                @db.Decimal(5, 1)
-  imr06quad             Decimal                @db.Decimal(5, 1)
-  iml06isqui            Decimal                @db.Decimal(5, 1)
-  imr06isqui            Decimal                @db.Decimal(5, 1)
-  observation           String?                @db.VarChar(255)
-  functionalEvaluations functionalEvaluations?
+  id           Int          @id @default(autoincrement())
+  iml06quad    Decimal      @db.Decimal(5, 1)
+  imr06quad    Decimal      @db.Decimal(5, 1)
+  iml06isqui   Decimal      @db.Decimal(5, 1)
+  imr06isqui   Decimal      @db.Decimal(5, 1)
+  observation  String?      @db.VarChar(255)
+  evaluationId Int          @unique
+  evaluations  evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
 }
 
 model functEvs07 {
-  id                    Int                    @id @default(autoincrement())
-  type                  String                 @db.VarChar(10)
-  cmj07                 Int
-  iml07sh               Int
-  imr07sh               Int
-  observation           String?                @db.VarChar(255)
-  functionalEvaluations functionalEvaluations?
+  id           Int          @id @default(autoincrement())
+  cmj07        Int
+  iml07sh      Int
+  imr07sh      Int
+  observation  String?      @db.VarChar(255)
+  evaluationId Int          @unique
+  evaluations  evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
 }
 
 model functEvs08 {
-  id                    Int                    @id @default(autoincrement())
-  type                  String                 @db.VarChar(10)
-  cmj08                 Decimal                @db.Decimal(5, 1)
-  sj08                  Decimal                @db.Decimal(5, 1)
-  iml08cmjuni           Decimal                @db.Decimal(5, 1)
-  imr08cmjuni           Decimal                @db.Decimal(5, 1)
-  observation           String?                @db.VarChar(255)
-  functionalEvaluations functionalEvaluations?
+  id           Int          @id @default(autoincrement())
+  cmj08        Decimal      @db.Decimal(5, 1)
+  sj08         Decimal      @db.Decimal(5, 1)
+  iml08cmjuni  Decimal      @db.Decimal(5, 1)
+  imr08cmjuni  Decimal      @db.Decimal(5, 1)
+  observation  String?      @db.VarChar(255)
+  evaluationId Int          @unique
+  evaluations  evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
 }
 
 model patients {
-  id                    Int                     @id @default(autoincrement())
-  name                  String                  @unique @db.VarChar(80)
-  email                 String?                 @db.VarChar(80)
-  phone                 String?                 @db.VarChar(11)
-  photo                 String
-  gender                String                  @db.VarChar(1)
-  birthdate             DateTime                @db.Date
-  domSm                 String                  @db.VarChar(10)
-  domIm                 String                  @db.VarChar(10)
-  sports                String?                 @db.VarChar(255)
-  weight                Int
-  height                Int
-  functionalEvaluations functionalEvaluations[]
+  id          Int           @id @default(autoincrement())
+  name        String        @unique @db.VarChar(80)
+  email       String?       @db.VarChar(80)
+  phone       String?       @db.VarChar(11)
+  photo       String
+  gender      String        @db.VarChar(1)
+  birthdate   DateTime      @db.Date
+  domSm       String        @db.VarChar(10)
+  domIm       String        @db.VarChar(10)
+  sports      String?       @db.VarChar(255)
+  weight      Int
+  height      Int
+  evaluations evaluations[]
 }

@@ -1,24 +1,14 @@
-export type CommonEvaluation = {
+export type Evaluation = {
   id: number;
   patientId: number | string;
-  evOrder: number;
+  evType: string;
   createdAt: Date | string;
 };
 
-export type FunctionalEvaluation = CommonEvaluation & {
-    functEvs01Id?: number;
-    functEvs02Id?: number;
-    functEvs03Id?: number;
-    functEvs04Id?: number;
-    functEvs05Id?: number;
-    functEvs06Id?: number;
-    functEvs07Id?: number;
-    functEvs08Id?: number;
-  };
+export type CreateFunctionalEvaluation = Omit<Evaluation, "id" | "createdAt">;
 
-export type CreateFunctionalEvaluation = Omit<FunctionalEvaluation, "id" | "createdAt">;
-
-export type UpdateFunctionalEvaluation = CreateFunctionalEvaluation;
+export type UpdateFunctionalEvaluation = 
+  Omit<CreateFunctionalEvaluation, "id"| "patientId" | "createdAt">;
 
 export type EvaluationFunction = {
   [key: string]: (data: any) => Promise<any>;

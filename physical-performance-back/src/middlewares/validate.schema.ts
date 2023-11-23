@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import joi from 'joi';
 import { unprocessableEntity } from '../errors/errors';
-import { ValidationResult } from 'protocols/validation.protocols';
+import { ValidationResult } from '../protocols/validation.protocols';
 
 function validateSchema(schema: joi.ObjectSchema): (req: Request, res: Response, next: NextFunction) => void {
   return (req: Request, res: Response, next: NextFunction): void => {

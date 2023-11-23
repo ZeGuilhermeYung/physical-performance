@@ -1,36 +1,46 @@
 import prisma from "../database/db";
-import { CreateFunctionalEvaluation, EvaluationFunction, FunctionalEvaluation } from "../protocols/evaluations.protocols";
+import { Evaluation } from "../protocols/evaluations.protocols";
 
-const createEvaluationFunction: EvaluationFunction = {
-  functional: prisma.functionalEvaluations.create
-  //physical: prisma.functEvs02.create
-};
-const findEvaluationFunction: EvaluationFunction = {
-  functional: prisma.functionalEvaluations.findFirst
-  //physical: prisma.functEvs02.create
-};
-
-async function insertEvaluation(evType: string, patientId: number, evOrder: number): Promise<FunctionalEvaluation> {
-  const evaluation: FunctionalEvaluation = await createEvaluationFunction[evType]({
+async function insertEvaluation(patientId: number, evType: string, createdAt: Date): Promise<Evaluation> {
+  const evaluation: Evaluation = await prisma.evaluations.create({
     data: {
       patientId,
-      evOrder
+      evType,
+      createdAt
     }
   });
 
   return evaluation;
 }
 
-async function findEvOrder(evType: string, patientId: number): Promise<number> {
-  const evaluation: FunctionalEvaluation = await findEvaluationFunction[evType]({
+async function updateEvaluation(id: number, createdAt: Date): Promise<Evaluation> {
+  const evaluation: Evaluation = await prisma.evaluations.update({
+    where: { id },
+    data: {
+      createdAt,
+    }
+  });
+  return evaluation;
+}
+
+async function deleteEvaluation(id: number): Promise<Evaluation> {
+  return prisma.evaluations.delete({
+    where: { id }
+  });
+}
+
+async function findEvOrder(patientId: number): Promise<Evaluation> {
+  const evaluation: Evaluation = await prisma.evaluations.findFirst({
     where: { patientId },
-    orderBy: { evOrder: "desc" }
+    orderBy: { id: "desc" }
   });
 
-  return evaluation.evOrder;
+  return evaluation;
 }
 
 export const evaluationsRepositories = {
   insertEvaluation,
+  updateEvaluation,
+  deleteEvaluation,
   findEvOrder
 };

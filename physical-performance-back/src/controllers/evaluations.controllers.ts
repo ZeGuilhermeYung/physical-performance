@@ -4,13 +4,21 @@ import { evaluationsRepositories } from '../repositories/evaluations.repositorie
 import { evaluationServices } from '../services/evaluations.services';
 
 async function postEvaluation(req: Request, res: Response) {
-  const { evType, patientId } = req.params;
+  const { patientId, evType } = req.params;
 
-  const evOrder = await evaluationServices.validateNewEvaluation(evType, patientId);
+  const createdAt = await evaluationServices.validateNewEvaluation(patientId);
 
-  await evaluationsRepositories.insertEvaluation(evType, parseInt(patientId), evOrder);
+  await evaluationsRepositories.insertEvaluation(parseInt(patientId), evType, createdAt);
 
   res.sendStatus(status.CREATED);
 }
 
-export default postEvaluation;
+async function deleteEvaluation(req: Request, res: Response) {
+  const { evaluationId } = req.params;
+
+  await evaluationsRepositories.deleteEvaluation(parseInt(evaluationId));
+
+  res.sendStatus(status.CREATED);
+}
+
+export { postEvaluation, deleteEvaluation };
