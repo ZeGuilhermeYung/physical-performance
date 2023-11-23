@@ -1,5 +1,5 @@
 import prisma from "../database/db";
-import { CreatePatient, Patient } from "../protocols/patients.protocols";
+import { CreatePatient, CreatePatientInfo, Patient } from "../protocols/patients.protocols";
 
 async function insertPatient(data: CreatePatient): Promise<Patient> {
   const formattedData = {
@@ -12,9 +12,33 @@ async function insertPatient(data: CreatePatient): Promise<Patient> {
   });
 }
 
-async function getPatients() {
-  return prisma.patients.findMany({
-    select: { id: true, name: true, gender: true, birthdate: true },
+async function getPatients(): Promise<CreatePatientInfo[]> {
+  const patientsInfo = await prisma.patients.findMany({
+    select: {
+      id: true,
+      name: true,
+      gender: true,
+      birthdate: true,
+      evaluations: {
+        select: { createdAt: true },
+        orderBy: { createdAt: 'desc' },
+        take: 1,
+      },
+    },
+  });
+
+  return patientsInfo.map(patient => {
+    const latestEvaluation = patient.evaluations[0];
+
+    return {
+      id: patient.id,
+      name: patient.name,
+      gender: patient.gender,
+      birthdate: patient.birthdate,
+      evaluations: latestEvaluation
+        ? { createdAt: latestEvaluation.createdAt }
+        : undefined,
+    };
   });
 }
 

@@ -1,4 +1,6 @@
-export type PatientAge = {
+import { Evaluation, NewEvaluation } from "./evaluations.protocols";
+
+export type PatientEvaluations = {
   id: number;
   name: string;
   email?: string;
@@ -12,14 +14,18 @@ export type PatientAge = {
   sports?: string;
   weight: number;
   height: number;
+  evaluations: Evaluation[] | NewEvaluation[];
 }
 
-export type Patient = Omit<PatientAge, "age">
+export type Patient = Omit<PatientEvaluations, "age" | "evaluations">
 
-export type CreatePatient = Omit<Patient, "id">;
+export type CreatePatient = Omit<Patient, "id">
 
 export type CreatePatientInfo = Pick<Patient,
-  "id" | "name" | "gender" | "birthdate">;
+  "id" | "name" | "gender" | "birthdate"> & {evaluations?:{createdAt: Date}}
 
-export type PatientInfo = Pick<PatientAge,
-  "id" | "name" | "gender" | "age">;
+export type PatientInfo = Pick<PatientEvaluations,
+  "id" | "name" | "gender" | "age">
+
+
+export type GetPatientEvaluations = Omit<PatientEvaluations, "age">;

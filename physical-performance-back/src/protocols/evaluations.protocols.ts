@@ -1,14 +1,12 @@
-export type Evaluation = {
+export type NewEvaluation = {
   id: number;
   patientId: number | string;
   evType: string;
   createdAt: Date | string;
+  complete: boolean;
 };
 
-export type CreateFunctionalEvaluation = Omit<Evaluation, "id" | "createdAt">;
-
-export type UpdateFunctionalEvaluation = 
-  Omit<CreateFunctionalEvaluation, "id"| "patientId" | "createdAt">;
+export type Evaluation = Omit<NewEvaluation, "complete">
 
 export type EvaluationFunction = {
   [key: string]: (data: any) => Promise<any>;
@@ -16,4 +14,5 @@ export type EvaluationFunction = {
 
 export type EvaluationParams = {
   evType: string;
-} & { patientId: string }
+  patientId: string;
+}

@@ -9,10 +9,10 @@ datasource db {
 
 model evaluations {
   id         Int         @id @default(autoincrement())
-  patientId  Int         @unique
+  patientId  Int         
   evType     String      @db.VarChar(50)
   createdAt  DateTime    @default(now()) @db.Timestamp(0)
-  patients   patients?   @relation(fields: [patientId], references: [id])
+  patients   patients?   @relation(fields: [patientId], references: [id], onDelete: Cascade)
   functEvs01 functEvs01?
   functEvs02 functEvs02?
   functEvs03 functEvs03?

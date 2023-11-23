@@ -1,3 +1,4 @@
+import { Decimal } from "@prisma/client/runtime/library";
 import { CreateFunctionalEv, FunctionalEv } from "../protocols/functionalEvs.protocols";
 import functionalEvRepositories from "../repositories/functionalEvs.repositories";
 
@@ -47,7 +48,7 @@ async function mountEvType(body: CreateFunctionalEv, evType: string, evCategory:
           return functEvs04;
   
         case "functEvs05":
-          const body05 = body as { iml05dist: number; imr05dist: number; iml05ang: number; imr05ang: number; observation?: string };
+          const body05 = body as { iml05dist: Decimal; imr05dist: Decimal; iml05ang: number; imr05ang: number; observation?: string };
           const functEvs05 = await functionalEvRepositories.insertFunctEv({
             evaluationId,
             iml05dist: body05.iml05dist,
@@ -59,7 +60,7 @@ async function mountEvType(body: CreateFunctionalEv, evType: string, evCategory:
           return functEvs05;
   
         case "functEvs06":
-          const body06 = body as { iml06quad: number; imr06quad: number; iml06isqui: number; imr06isqui: number; observation?: string };
+          const body06 = body as { iml06quad: Decimal; imr06quad: Decimal; iml06isqui: Decimal; imr06isqui: Decimal; observation?: string };
           const functEvs06 = await functionalEvRepositories.insertFunctEv({
             evaluationId,
             iml06quad: body06.iml06quad,
@@ -82,7 +83,7 @@ async function mountEvType(body: CreateFunctionalEv, evType: string, evCategory:
           return functEvs07;
   
         case "functEvs08":
-          const body08 = body as { cmj08: number; sj08: number; iml08cmjuni: number; imr08cmjuni: number; observation?: string };
+          const body08 = body as { cmj08: Decimal; sj08: Decimal; iml08cmjuni: Decimal; imr08cmjuni: Decimal; observation?: string };
           const functEvs08 = await functionalEvRepositories.insertFunctEv({
             evaluationId,
             cmj08: body08.cmj08,

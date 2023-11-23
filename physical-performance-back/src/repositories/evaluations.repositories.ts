@@ -1,5 +1,6 @@
 import prisma from "../database/db";
 import { Evaluation } from "../protocols/evaluations.protocols";
+import { GetPatientEvaluations } from "../protocols/patients.protocols";
 
 async function insertEvaluation(patientId: number, evType: string, createdAt: Date): Promise<Evaluation> {
   const evaluation: Evaluation = await prisma.evaluations.create({
@@ -29,18 +30,30 @@ async function deleteEvaluation(id: number): Promise<Evaluation> {
   });
 }
 
-async function findEvOrder(patientId: number): Promise<Evaluation> {
+async function findLastEvaluation(patientId: number): Promise<Evaluation> {
   const evaluation: Evaluation = await prisma.evaluations.findFirst({
     where: { patientId },
-    orderBy: { id: "desc" }
+    orderBy: { id: "asc" }
   });
 
   return evaluation;
+}
+
+async function getEvaluations(patientId: number): Promise<GetPatientEvaluations> {
+  const patientEvaluations = await prisma.patients.findUnique({
+    where: { id: patientId },
+    include: {
+      evaluations: true
+    } 
+  });
+
+  return patientEvaluations;
 }
 
 export const evaluationsRepositories = {
   insertEvaluation,
   updateEvaluation,
   deleteEvaluation,
-  findEvOrder
+  getEvaluations,
+  findLastEvaluation
 };

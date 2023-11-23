@@ -20,7 +20,7 @@ async function postFunctEv(req: Request, res: Response) {
 }
 
 async function updateFunctEv(req: Request, res: Response) {
-  const { functEvId, evType, evaluationId, evCategory } = req.params as FunctionalEvParams;
+  const { functEvId, evCategory } = req.params as FunctionalEvParams;
   const body = req.body as UpdateFunctionalEv;
 
   await functionalEvRepositories.updateFunctEv(parseInt(functEvId), body, evCategory);

@@ -1,5 +1,7 @@
+import { Evaluation, NewEvaluation } from "../protocols/evaluations.protocols";
 import { notFound } from "../errors/errors";
 import { patientsRepositories } from "../repositories/patients.repositories";
+import functionalEvRepositories from "../repositories/functionalEvs.repositories";
 
 function insertNowDate() {
   const now = new Date();
@@ -19,7 +21,24 @@ async function validateNewEvaluation(patientId: string) {
   return insertNowDate();
 }
 
+async function isEvaluationComplete(evaluations: Evaluation[]) {
+  const newEvaluations: NewEvaluation[] = await Promise.all(
+    evaluations.map(async (evaluation) => {
+      const functEvs = await functionalEvRepositories.getFunctEvs(evaluation.id);
+
+      if (functEvs.filter((functEv) => functEv === null).length >= 1) {
+        return { ...evaluation, complete: false };
+      } else {
+        return { ...evaluation, complete: true };
+      }
+    })
+  );
+
+  return newEvaluations;
+}
+
 export const evaluationServices = {
   insertNowDate,
-  validateNewEvaluation
+  validateNewEvaluation,
+  isEvaluationComplete
 }

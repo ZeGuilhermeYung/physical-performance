@@ -1,4 +1,4 @@
-import { FunctEvFunction, CreateFunctionalEv, FunctionalEv, UpdateFunctionalEv } from "../protocols/functionalEvs.protocols";
+import { FunctEvFunction, CreateFunctionalEv, FunctionalEv, UpdateFunctionalEv, GetFunctionalEvs } from "../protocols/functionalEvs.protocols";
 import prisma from "../database/db";
 
 const createFunctEvFunction: FunctEvFunction = {
@@ -50,9 +50,38 @@ async function updateFunctEv(id: number, body: UpdateFunctionalEv, evCategory: s
   return functEv;
 }
 
+async function getFunctEvs(evaluationId: number): Promise<GetFunctionalEvs> {
+  const functEvs = await prisma.evaluations.findUnique({
+    where: { id: evaluationId },
+    select: {
+      functEvs01: true,
+      functEvs02: true,
+      functEvs03: true,
+      functEvs04: true,
+      functEvs05: true,
+      functEvs06: true,
+      functEvs07: true,
+      functEvs08: true,
+    },
+  });
+
+  const result: GetFunctionalEvs = [
+    functEvs.functEvs01,
+    functEvs.functEvs02,
+    functEvs.functEvs03,
+    functEvs.functEvs04,
+    functEvs.functEvs05,
+    functEvs.functEvs06,
+    functEvs.functEvs07,
+    functEvs.functEvs08
+  ];
+  return result;
+};
+
 const functionalEvRepositories = {
   insertFunctEv,
-  updateFunctEv
+  updateFunctEv,
+  getFunctEvs
 };
 
 export default functionalEvRepositories;
