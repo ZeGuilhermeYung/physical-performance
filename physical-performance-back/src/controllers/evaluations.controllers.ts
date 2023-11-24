@@ -5,7 +5,6 @@ import { evaluationServices } from '../services/evaluations.services';
 
 async function postEvaluation(req: Request, res: Response) {
   const { patientId, evType } = req.params;
-
   const createdAt = await evaluationServices.validateNewEvaluation(patientId);
 
   await evaluationsRepositories.insertEvaluation(parseInt(patientId), evType, createdAt);
@@ -21,4 +20,20 @@ async function deleteEvaluation(req: Request, res: Response) {
   res.sendStatus(status.CREATED);
 }
 
-export { postEvaluation, deleteEvaluation };
+async function getEvaluations(req: Request, res: Response) {
+  const { patientId } = req.params;
+
+  const evaluations = await evaluationsRepositories.getEvaluations(parseInt(patientId));
+
+  res.status(status.OK).send(evaluations);
+}
+
+async function getEvaluation(req: Request, res: Response) {
+  const { evType, evaluationId } = req.params;
+
+  const evaluation = await evaluationServices.selectEvaluation(evType, parseInt(evaluationId));
+
+  res.status(status.OK).send(evaluation);
+}
+
+export { postEvaluation, deleteEvaluation, getEvaluations, getEvaluation };

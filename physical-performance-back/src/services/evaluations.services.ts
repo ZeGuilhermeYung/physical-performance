@@ -15,13 +15,16 @@ async function validateNewEvaluation(patientId: string) {
 
   const patientExists = await patientsRepositories.getPatient(parseInt(patientId));
   if (!patientExists) {
-    throw notFound("O paciente não existe no banco de dados!");
+    throw notFound("O aluno não existe no banco de dados!");
   }
 
   return insertNowDate();
 }
 
-async function isEvaluationComplete(evaluations: Evaluation[]) {
+async function isEvaluationComplete(evaluations: Evaluation[] | null) {
+  if (evaluations.length === 0) {
+    return null;
+  }
   const newEvaluations: NewEvaluation[] = await Promise.all(
     evaluations.map(async (evaluation) => {
       const functEvs = await functionalEvRepositories.getFunctEvs(evaluation.id);
@@ -37,8 +40,16 @@ async function isEvaluationComplete(evaluations: Evaluation[]) {
   return newEvaluations;
 }
 
+async function selectEvaluation(evType: string, evaluationId: number) {
+  if (evType === "functional") {
+    const functionalEv = await functionalEvRepositories.getFunctEvs(evaluationId);
+    return functionalEv;
+  }
+}
+
 export const evaluationServices = {
   insertNowDate,
   validateNewEvaluation,
-  isEvaluationComplete
+  isEvaluationComplete,
+  selectEvaluation
 }

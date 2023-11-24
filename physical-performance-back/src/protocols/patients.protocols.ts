@@ -22,7 +22,7 @@ export type Patient = Omit<PatientEvaluations, "age" | "evaluations">
 export type CreatePatient = Omit<Patient, "id">
 
 export type CreatePatientInfo = Pick<Patient,
-  "id" | "name" | "gender" | "birthdate"> & {evaluations?:{createdAt: Date}}
+  "id" | "name" | "gender" | "birthdate"> & {evaluations?:{finishedAt: Date}}
 
 export type PatientInfo = Pick<PatientEvaluations,
   "id" | "name" | "gender" | "age">

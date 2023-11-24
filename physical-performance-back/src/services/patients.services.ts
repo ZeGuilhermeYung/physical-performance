@@ -31,7 +31,6 @@ function returnAge(birthdate: string): number {
   const age = Math.floor(
     (today.getTime() - birthdateObj.getTime()) / (1000 * 60 * 60 * 24 * 365.25)
   );
-  
 
   return age;
 }
@@ -40,7 +39,7 @@ export function getFormattedDateDifference(targetDate: Date): string {
   const currentDate = new Date();
   const timeDifference = currentDate.getTime() - targetDate.getTime();
   const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) - 3);
   const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
@@ -70,25 +69,25 @@ export function getFormattedDateDifference(targetDate: Date): string {
 
 async function mountPatientsInfo(name?: string): Promise<PatientInfo[]> {
   let patientsInfo: CreatePatientInfo[];
-
+  
   if (name) {
     patientsInfo = await patientsRepositories.findPatients(name);
 
-    if (!patientsInfo)
+    if (patientsInfo.length === 0)
       throw notFound("Nenhum paciente encontrado com este nome!");
   } else {
     patientsInfo = await patientsRepositories.getPatients();
   }
-
-  
 
   const formattedPatientsInfo: PatientInfo[] = patientsInfo.map(patientInfo => (
     {
       id: patientInfo.id,
       name: patientInfo.name,
       gender: patientInfo.gender,
-      age: returnAge(dayjs(patientInfo.birthdate).format('DD/MM/YYYY')),
-      lastEvDate: getFormattedDateDifference(patientInfo.evaluations.createdAt)
+      age: returnAge(dayjs(patientInfo.birthdate).utc().format('DD/MM/YYYY')),
+      lastEvDate: patientInfo.evaluations ?
+        getFormattedDateDifference(patientInfo.evaluations.finishedAt)
+        : "Não há avaliações"
     }
   ));
   return formattedPatientsInfo;
@@ -96,9 +95,9 @@ async function mountPatientsInfo(name?: string): Promise<PatientInfo[]> {
 
 async function mountPatient(id: string): Promise<Patient> {
   const patient: Patient = await patientsRepositories.getPatient(parseInt(id));
-  const evaluations = await evaluationsRepositories.getEvaluations(parseInt(id));
+  const evaluations = await evaluationsRepositories.getPatientEvaluations(parseInt(id));
   const newEvaluations = await evaluationServices.isEvaluationComplete(evaluations.evaluations);
-
+  
   patient.birthdate = dayjs(patient.birthdate).utc().format('DD/MM/YYYY');
 
   const patientEvaluations: PatientEvaluations = { ...patient, age: returnAge(patient.birthdate), evaluations: newEvaluations };

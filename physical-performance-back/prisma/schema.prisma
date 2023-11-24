@@ -1,17 +1,20 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  extensions = [pgcrypto, citext, unaccent]
 }
 
 model evaluations {
   id         Int         @id @default(autoincrement())
-  patientId  Int         
+  patientId  Int
   evType     String      @db.VarChar(50)
   createdAt  DateTime    @default(now()) @db.Timestamp(0)
+  finishedAt DateTime    @default(now()) @db.Timestamp(0)
   patients   patients?   @relation(fields: [patientId], references: [id], onDelete: Cascade)
   functEvs01 functEvs01?
   functEvs02 functEvs02?
@@ -104,7 +107,7 @@ model functEvs08 {
 
 model patients {
   id          Int           @id @default(autoincrement())
-  name        String        @unique @db.VarChar(80)
+  name        String        @unique @db.Citext
   email       String?       @db.VarChar(80)
   phone       String?       @db.VarChar(11)
   photo       String

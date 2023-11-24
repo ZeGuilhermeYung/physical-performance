@@ -20,8 +20,8 @@ async function getPatients(): Promise<CreatePatientInfo[]> {
       gender: true,
       birthdate: true,
       evaluations: {
-        select: { createdAt: true },
-        orderBy: { createdAt: 'desc' },
+        select: { finishedAt: true },
+        orderBy: { finishedAt: 'desc' },
         take: 1,
       },
     },
@@ -29,14 +29,13 @@ async function getPatients(): Promise<CreatePatientInfo[]> {
 
   return patientsInfo.map(patient => {
     const latestEvaluation = patient.evaluations[0];
-
     return {
       id: patient.id,
       name: patient.name,
       gender: patient.gender,
       birthdate: patient.birthdate,
       evaluations: latestEvaluation
-        ? { createdAt: latestEvaluation.createdAt }
+        ? { finishedAt: latestEvaluation.finishedAt }
         : undefined,
     };
   });

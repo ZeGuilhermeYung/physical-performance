@@ -12,9 +12,9 @@ async function postFunctEv(req: Request, res: Response) {
 
   await functionalEvsServices.mountEvType(body, evType, evCategory, parseInt(evaluationId));
   
-  const createdAt = evaluationServices.insertNowDate();
+  const finishedAt = evaluationServices.insertNowDate();
   
-  await evaluationsRepositories.updateEvaluation(parseInt(evaluationId), createdAt);
+  await evaluationsRepositories.updateEvaluation(parseInt(evaluationId), finishedAt);
   
   res.sendStatus(status.CREATED);
 }
