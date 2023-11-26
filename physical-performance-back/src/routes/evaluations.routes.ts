@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { validateSchema } from "../middlewares/validate.schema";
 import { postEvaluation, deleteEvaluation, getEvaluations, getEvaluation } from "../controllers/evaluations.controllers";
-import { evaluationSchema } from "schemas/evaluations.schemas";
+import { evaluationSchema } from "../schemas/evaluations.schemas";
 
 const evaluationsRouter = Router();
 

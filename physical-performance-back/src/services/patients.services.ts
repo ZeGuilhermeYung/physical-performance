@@ -35,36 +35,33 @@ function returnAge(birthdate: string): number {
   return age;
 }
 
-export function getFormattedDateDifference(targetDate: Date): string {
+export function getFormattedDateDifference(targetDate: Date): {formattedMessage: string, days: number} {
   const currentDate = new Date();
   const timeDifference = currentDate.getTime() - targetDate.getTime();
   const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) - 3);
-  const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-  if (days === 0) {
-    const hourText = hours > 0 ? `${hours}h` : '';
-    const minuteText = minutes > 0 ? `${minutes}min` : '';
-    const secondText = seconds > 0 ? `${seconds}s` : '';
+  if (days === 0) return { formattedMessage: "Hoje", days};
+  if (days === 1) return { formattedMessage: "Ontem", days};
+  if (days === 2) return { formattedMessage: "Anteontem", days};
+  if (days === 7) return { formattedMessage: "Há uma semana", days};
+  if (days === 14 || days === 21 || days === 28)
+    return { formattedMessage: `Há ${days / 7} semanas`, days};
 
-    const parts = [hourText, minuteText, secondText].filter(Boolean);
-    const formattedMessage = parts.length > 0 ? `Há ${parts.join(' ')}` : 'Menos de um dia';
+  const years = Math.floor(days / 365);
+  const remainingDaysAfterYears = days % 365;
+  const months = Math.floor(remainingDaysAfterYears / 30);
+  const remainingDays = remainingDaysAfterYears % 30;
 
-    return formattedMessage;
-  }
-
-  const months = Math.floor(days / 30);
-  const years = Math.floor(months / 12);
+  
 
   const yearText = years > 0 ? `${years} ano${years > 1 ? 's' : ''}` : '';
   const monthText = months > 0 ? `${months} ${months > 1 ? 'meses' : 'mês'}` : '';
-  const dayText = days > 0 ? `${days} dia${days > 1 ? 's' : ''}` : '';
+  const dayText = remainingDays > 0 ? `${remainingDays} dia${remainingDays > 1 ? 's' : ''}` : '';
 
   const parts = [yearText, monthText, dayText].filter(Boolean);
-  const formattedMessage = `Há ${parts.join(', ')}`;
+  const formattedMessage = `Há ${parts.join(' ')}`;
 
-  return formattedMessage;
+  return { formattedMessage, days };
 }
 
 async function mountPatientsInfo(name?: string): Promise<PatientInfo[]> {

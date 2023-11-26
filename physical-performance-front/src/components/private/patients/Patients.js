@@ -27,7 +27,8 @@ export default function Patients () {
           id={patient.id}
           name={patient.name}
           gender={patient.gender}
-          age={patient.age} />)}
+          age={patient.age}
+          lastEvDate={patient.lastEvDate} />)}
     </Article>
   );
 }

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-export default function Patient ( {id, name, gender, age} ) {
+export default function Patient ( {id, name, gender, age, lastEvDate} ) {
   const navigate = useNavigate();
 
   function navigateToPatient () {
@@ -10,18 +10,22 @@ export default function Patient ( {id, name, gender, age} ) {
 
   return (
     <PatientCard onClick={() => navigateToPatient()}>
-      <NameContainer>
+      <NameContainer days={lastEvDate.days} >
         <h3>{name}</h3>
+        <h3>última avaliação</h3>
       </NameContainer>
       <figure>
         <h3>sexo: {gender}</h3>
-        <h3>idade: {age}</h3> 
+        <h3>idade: {age}</h3>
+        <TimeSince>
+          <h3>{lastEvDate.formattedMessage}</h3>
+        </TimeSince>
       </figure> 
     </PatientCard>
   );
 }
 const PatientCard = styled.button`
-  width: 500px;
+  width: 650px;
   height: 110px;
   border-radius: 7px 7px 15px 15px;
   margin-bottom: 10px;
@@ -42,8 +46,9 @@ const PatientCard = styled.button`
     height: 65px;
     background-color: #0E2237;
     border-radius: 0 0 15px 15px;
+    padding: 0 30px 0 30px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
   }`
@@ -51,11 +56,23 @@ const PatientCard = styled.button`
 const NameContainer = styled.section`
   width: 100%;
   height: 45px;
-  background-color: #4C956A;
+  background-color: ${props => (
+    (props.days >= 28 && props.days < 42) ? "#EDAD46"
+    : (props.days >= 42) ? "#D63738"
+    : "#4C956A"
+  )};
   border-radius: 7px 7px 0 0;
-  padding-left: 20px;
+  padding: 0 80px 0 20px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;`
+
+const TimeSince = styled.div`
+  width: 230px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
   align-items: center;
   box-sizing: border-box;`
   
