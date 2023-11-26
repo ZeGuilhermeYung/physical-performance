@@ -11,8 +11,3 @@ export type Evaluation = Omit<NewEvaluation, "complete">
 export type EvaluationFunction = {
   [key: string]: (data: any) => Promise<any>;
 };
-
-export type EvaluationParams = {
-  evType: string;
-  patientId: string;
-}

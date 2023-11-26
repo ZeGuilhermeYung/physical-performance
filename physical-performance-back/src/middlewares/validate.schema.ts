@@ -17,18 +17,4 @@ function validateSchema(schema: joi.ObjectSchema): (req: Request, res: Response,
   };
 }
 
-function validateParamsSchema(schema: joi.ObjectSchema): (req: Request, res: Response, next: NextFunction) => void {
-  return (req: Request, res: Response, next: NextFunction): void => {
-    const validation: ValidationResult = schema.validate(req.params, { abortEarly: false });
-    
-    if (validation.error) {
-      const errors: string[] = validation.error.details.map((detail) => detail.message);
-      throw unprocessableEntity(errors);
-    }
-
-    res.locals.params = req.params;
-    next();
-  };
-}
-
-export { validateSchema, validateParamsSchema };
+export { validateSchema };
