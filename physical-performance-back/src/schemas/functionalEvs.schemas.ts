@@ -2,30 +2,35 @@ import joi from 'joi';
 import { CreateFunctionalEv } from '../protocols/functionalEvs.protocols';
 
 const functEvs01Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   iml01: joi.number().min(1).max(3).required(),
   imr01: joi.number().min(1).max(3).required(),
   observation: joi.string().empty('')
 });
 
 const functEvs02Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   iml02: joi.number().min(0).max(360).required(),
   imr02: joi.number().min(0).max(360).required(),
   observation: joi.string().empty('')
 });
 
 const functEvs03Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   iml03: joi.string().min(8).max(10).required(),
   imr03: joi.string().min(8).max(10).required(),
   observation: joi.string().empty('')
 });
 
 const functEvs04Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   iml04: joi.number().min(0).max(360).required(),
   imr04: joi.number().min(0).max(360).required(),
   observation: joi.string().empty('')
 });
 
 const functEvs05Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   iml05dist: joi.number().min(0).max(99999).required(),
   imr05dist: joi.number().min(0).max(99999).required(),
   iml05ang: joi.number().min(0).max(360).required(),
@@ -34,6 +39,7 @@ const functEvs05Schema = joi.object<CreateFunctionalEv>({
 });
 
 const functEvs06Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   iml06quad: joi.number().min(0).max(999999).required(),
   imr06quad: joi.number().min(0).max(999999).required(),
   iml06isqui: joi.number().min(0).max(999999).required(),
@@ -42,6 +48,7 @@ const functEvs06Schema = joi.object<CreateFunctionalEv>({
 });
 
 const functEvs07Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   cmj07: joi.number().min(0).max(999999).required(),
   iml07sh: joi.number().min(0).max(999999).required(),
   imr07sh: joi.number().min(0).max(999999).required(),
@@ -49,6 +56,7 @@ const functEvs07Schema = joi.object<CreateFunctionalEv>({
 });
 
 const functEvs08Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   cmj08: joi.number().min(0).max(999999).required(),
   sj08: joi.number().min(0).max(999999).required(),
   iml08cmjuni: joi.number().min(0).max(999999).required(),
@@ -57,30 +65,35 @@ const functEvs08Schema = joi.object<CreateFunctionalEv>({
 });
 
 const updatefunctEvs01Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   iml01: joi.number().min(1).max(3),
   imr01: joi.number().min(1).max(3),
   observation: joi.string().empty('')
 });
 
 const updatefunctEvs02Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   iml02: joi.number().min(0).max(360),
   imr02: joi.number().min(0).max(360),
   observation: joi.string().empty('')
 });
 
 const updatefunctEvs03Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   iml03: joi.string().min(8).max(10),
   imr03: joi.string().min(8).max(10),
   observation: joi.string().empty('')
 });
 
 const updatefunctEvs04Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   iml04: joi.number().min(0).max(360),
   imr04: joi.number().min(0).max(360),
   observation: joi.string().empty('')
 });
 
 const updatefunctEvs05Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   iml05dist: joi.number().min(0).max(99999),
   imr05dist: joi.number().min(0).max(99999),
   iml05ang: joi.number().min(0).max(360),
@@ -89,6 +102,7 @@ const updatefunctEvs05Schema = joi.object<CreateFunctionalEv>({
 });
 
 const updatefunctEvs06Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   iml06quad: joi.number().min(0).max(999999),
   imr06quad: joi.number().min(0).max(999999),
   iml06isqui: joi.number().min(0).max(999999),
@@ -97,6 +111,7 @@ const updatefunctEvs06Schema = joi.object<CreateFunctionalEv>({
 });
 
 const updatefunctEvs07Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   cmj07: joi.number().min(0).max(999999),
   iml07sh: joi.number().min(0).max(999999),
   imr07sh: joi.number().min(0).max(999999),
@@ -104,6 +119,7 @@ const updatefunctEvs07Schema = joi.object<CreateFunctionalEv>({
 });
 
 const updatefunctEvs08Schema = joi.object<CreateFunctionalEv>({
+  evaluationId: joi.number().required(),
   cmj08: joi.number().min(0).max(999999),
   sj08: joi.number().min(0).max(999999),
   iml08cmjuni: joi.number().min(0).max(999999),

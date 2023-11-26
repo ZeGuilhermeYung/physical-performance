@@ -5,7 +5,7 @@ import { functEvSchemas, updateFunctEvSchemas } from "../schemas/functionalEvs.s
 
 const functEvsRouter = Router();
 
-functEvsRouter.post('/functEvs/:evCategory/:evaluationId', selectEvSchema(functEvSchemas), postFunctEv);
-functEvsRouter.patch('/functEvs/:evCategory/:functEvId', selectEvSchema(updateFunctEvSchemas), updateFunctEv);
+functEvsRouter.post('/functEvs/:evCategory', selectEvSchema(functEvSchemas), postFunctEv);
+functEvsRouter.patch('/functEvs/:evCategory/:id', selectEvSchema(updateFunctEvSchemas), updateFunctEv);
 
 export default functEvsRouter;

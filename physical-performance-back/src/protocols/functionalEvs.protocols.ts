@@ -43,11 +43,3 @@ export type FunctEvFunction = {
 export type CreateFunctEvParam = {
   [key: string]: (data: any) => Promise<any>;
 };
-
-export type FunctionalEvParams = {
-  patientId: string;
-  evType: string,
-  evaluationId: string;
-  evCategory: string;
-  functEvId?: string;
-}

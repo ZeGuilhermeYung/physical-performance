@@ -5,7 +5,7 @@ import { physicalEvSchemas, updatePhysicalEvSchemas } from "../schemas/physicalE
 
 const physicalEvsRouter = Router();
 
-physicalEvsRouter.post('/physicalEvs/:evCategory/:evaluationId', selectEvSchema(physicalEvSchemas), postPhysicalEv);
-physicalEvsRouter.patch('/physicalEvs/:evCategory/:physicalEvId', selectEvSchema(updatePhysicalEvSchemas), updatePhysicalEv);
+physicalEvsRouter.post('/physicalEvs/:evCategory', selectEvSchema(physicalEvSchemas), postPhysicalEv);
+physicalEvsRouter.patch('/physicalEvs/:evCategory/:id', selectEvSchema(updatePhysicalEvSchemas), updatePhysicalEv);
 
 export default physicalEvsRouter;

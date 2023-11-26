@@ -2,7 +2,9 @@ import { Decimal } from "@prisma/client/runtime/library";
 import { CreatePhysicalEv, PhysicalEv } from "../protocols/physicalEvs.protocols";
 import physicalEvRepositories from "../repositories/physicalEvs.repositories";
 
-async function mountPhysicalEv(body: CreatePhysicalEv, evCategory: string, evaluationId: number): Promise<PhysicalEv> {
+async function mountPhysicalEv(body: CreatePhysicalEv, evCategory: string): Promise<PhysicalEv> {
+  const { evaluationId } = body;
+  
   switch (evCategory) {
     case "physicalEvsImages":
       const bodyImages = body as { frontImage: string; backImage: string; rightImage: string; leftImage: string };

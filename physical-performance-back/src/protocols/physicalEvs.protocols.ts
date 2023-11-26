@@ -76,11 +76,3 @@ export type PhysicalEvFunction = {
 export type CreatePhysicalEvParam = {
   [key: string]: (data: any) => Promise<any>;
 };
-
-export type PhysicalEvParams = {
-  patientId: string;
-  evType: string;
-  evaluationId: string;
-  evCategory: string;
-  physicalEvId?: string;
-};

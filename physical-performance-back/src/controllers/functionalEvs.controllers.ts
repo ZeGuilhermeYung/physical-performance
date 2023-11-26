@@ -1,29 +1,29 @@
 import { Request, Response } from 'express';
 import status from 'http-status';
 import { functionalEvsServices } from '../services/functionalEvs.services';
-import { CreateFunctionalEv, FunctionalEvParams, UpdateFunctionalEv } from '../protocols/functionalEvs.protocols';
+import { CreateFunctionalEv, UpdateFunctionalEv } from '../protocols/functionalEvs.protocols';
+import { EvaluationParams } from '../protocols/evaluations.protocols';
 import { evaluationsRepositories } from '../repositories/evaluations.repositories';
 import { evaluationServices } from '../services/evaluations.services';
 import functionalEvRepositories from '../repositories/functionalEvs.repositories';
-
 export async function postFunctEv(req: Request, res: Response) {
-  const { evaluationId, evCategory } = req.params as FunctionalEvParams;
+  const { evCategory } = req.params as EvaluationParams;
   const body = req.body as CreateFunctionalEv;
 
-  await functionalEvsServices.mountFunctEv(body, evCategory, parseInt(evaluationId));
+  await functionalEvsServices.mountFunctEv(body, evCategory);
   
   const finishedAt = evaluationServices.insertNowDate();
   
-  await evaluationsRepositories.updateEvaluation(parseInt(evaluationId), finishedAt);
+  await evaluationsRepositories.updateEvaluation(body.evaluationId, finishedAt);
   
   res.sendStatus(status.CREATED);
 }
 
 export async function updateFunctEv(req: Request, res: Response) {
-  const { functEvId, evCategory } = req.params as FunctionalEvParams;
+  const { id, evCategory } = req.params as EvaluationParams;
   const body = req.body as UpdateFunctionalEv;
 
-  await functionalEvRepositories.updateFunctEv(parseInt(functEvId), body, evCategory);
+  await functionalEvRepositories.updateFunctEv(parseInt(id), body, evCategory);
 
   res.sendStatus(status.CREATED);
 }

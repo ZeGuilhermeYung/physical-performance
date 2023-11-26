@@ -2,6 +2,7 @@ import joi from 'joi';
 import { CreatePhysicalEv, UpdatePhysicalEv } from '../protocols/physicalEvs.protocols';
 
 const physicalEvsImagesSchema = joi.object<CreatePhysicalEv>({
+  evaluationId: joi.number().required(),
   frontImage: joi.string().required(),
   backImage: joi.string().required(),
   rightImage: joi.string().required(),
@@ -9,6 +10,7 @@ const physicalEvsImagesSchema = joi.object<CreatePhysicalEv>({
 });
 
 const physicalEvs01Schema = joi.object<CreatePhysicalEv>({
+  evaluationId: joi.number().required(),
   chest: joi.number().min(0).max(999999).required(),
   abdomen: joi.number().min(0).max(999999).required(),
   rRelaxedBiceps: joi.number().min(0).max(999999).required(),
@@ -26,6 +28,7 @@ const physicalEvs01Schema = joi.object<CreatePhysicalEv>({
 });
 
 const physicalEvs02Schema = joi.object<CreatePhysicalEv>({
+  evaluationId: joi.number().required(),
   totalBodyWater: joi.number().min(0).max(999999).required(),
   proteins: joi.number().min(0).max(999999).required(),
   minerals: joi.number().min(0).max(999999).required(),
@@ -36,12 +39,14 @@ const physicalEvs02Schema = joi.object<CreatePhysicalEv>({
 });
 
 const physicalEvs03Schema = joi.object<CreatePhysicalEv>({
+  evaluationId: joi.number().required(),
   weight: joi.number().min(0).max(999999).required(),
   skeletalMuscleMass: joi.number().min(0).max(999999).required(),
   bodyFatMass: joi.number().min(0).max(999999).required()
 });
 
 const physicalEvs04Schema = joi.object<CreatePhysicalEv>({
+  evaluationId: joi.number().required(),
   bodyMassIndex: joi.number().min(0).max(999999).required(),
   bodyFatPercentage: joi.number().min(0).max(999999).required(),
   waistHipRatio: joi.number().min(0).max(999999).required(),
@@ -50,12 +55,14 @@ const physicalEvs04Schema = joi.object<CreatePhysicalEv>({
 });
 
 const physicalEvs05Schema = joi.object<CreatePhysicalEv>({
+  evaluationId: joi.number().required(),
   bodyCompositionAnalysis: joi.string(),
   bodyFatPercentage: joi.string(),
   waistHipRatio: joi.string()
 });
 
 const updatephysicalEvsImagesSchema = joi.object<UpdatePhysicalEv>({
+  evaluationId: joi.number().required(),
   frontImage: joi.string(),
   backImage: joi.string(),
   rightImage: joi.string(),
@@ -63,6 +70,7 @@ const updatephysicalEvsImagesSchema = joi.object<UpdatePhysicalEv>({
 });
 
 const updatephysicalEvs01Schema = joi.object<UpdatePhysicalEv>({
+  evaluationId: joi.number().required(),
   chest: joi.number().min(0).max(999999),
   abdomen: joi.number().min(0).max(999999),
   rRelaxedBiceps: joi.number().min(0).max(999999),
@@ -80,6 +88,7 @@ const updatephysicalEvs01Schema = joi.object<UpdatePhysicalEv>({
 });
 
 const updatephysicalEvs02Schema = joi.object<UpdatePhysicalEv>({
+  evaluationId: joi.number().required(),
   totalBodyWater: joi.number().min(0).max(999999),
   proteins: joi.number().min(0).max(999999),
   minerals: joi.number().min(0).max(999999),
@@ -90,12 +99,14 @@ const updatephysicalEvs02Schema = joi.object<UpdatePhysicalEv>({
 });
 
 const updatephysicalEvs03Schema = joi.object<UpdatePhysicalEv>({
+  evaluationId: joi.number().required(),
   weight: joi.number().min(0).max(999999),
   skeletalMuscleMass: joi.number().min(0).max(999999),
   bodyFatMass: joi.number().min(0).max(999999)
 });
 
 const updatephysicalEvs04Schema = joi.object<UpdatePhysicalEv>({
+  evaluationId: joi.number().required(),
   bodyMassIndex: joi.number().min(0).max(999999),
   bodyFatPercentage: joi.number().min(0).max(999999),
   waistHipRatio: joi.number().min(0).max(999999),
@@ -104,6 +115,7 @@ const updatephysicalEvs04Schema = joi.object<UpdatePhysicalEv>({
 });
 
 const updatephysicalEvs05Schema = joi.object<UpdatePhysicalEv>({
+  evaluationId: joi.number().required(),
   bodyCompositionAnalysis: joi.string(),
   bodyFatPercentage: joi.string(),
   waistHipRatio: joi.string()

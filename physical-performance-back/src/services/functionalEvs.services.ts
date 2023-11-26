@@ -2,8 +2,8 @@ import { Decimal } from "@prisma/client/runtime/library";
 import { CreateFunctionalEv, FunctionalEv } from "../protocols/functionalEvs.protocols";
 import functionalEvRepositories from "../repositories/functionalEvs.repositories";
 
-async function mountFunctEv(body: CreateFunctionalEv, evCategory: string, evaluationId: number): Promise<FunctionalEv> {
-  const { observation } = body as CreateFunctionalEv;
+async function mountFunctEv(body: CreateFunctionalEv, evCategory: string): Promise<FunctionalEv> {
+  const { evaluationId, observation } = body;
  
   switch (evCategory) {
     case "functEvs01":
