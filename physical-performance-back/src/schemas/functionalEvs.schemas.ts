@@ -56,6 +56,61 @@ const functEvs08Schema = joi.object<CreateFunctionalEv>({
   observation: joi.string().empty('')
 });
 
+const updatefunctEvs01Schema = joi.object<CreateFunctionalEv>({
+  iml01: joi.number().min(1).max(3),
+  imr01: joi.number().min(1).max(3),
+  observation: joi.string().empty('')
+});
+
+const updatefunctEvs02Schema = joi.object<CreateFunctionalEv>({
+  iml02: joi.number().min(0).max(360),
+  imr02: joi.number().min(0).max(360),
+  observation: joi.string().empty('')
+});
+
+const updatefunctEvs03Schema = joi.object<CreateFunctionalEv>({
+  iml03: joi.string().min(8).max(10),
+  imr03: joi.string().min(8).max(10),
+  observation: joi.string().empty('')
+});
+
+const updatefunctEvs04Schema = joi.object<CreateFunctionalEv>({
+  iml04: joi.number().min(0).max(360),
+  imr04: joi.number().min(0).max(360),
+  observation: joi.string().empty('')
+});
+
+const updatefunctEvs05Schema = joi.object<CreateFunctionalEv>({
+  iml05dist: joi.number().min(0).max(99999),
+  imr05dist: joi.number().min(0).max(99999),
+  iml05ang: joi.number().min(0).max(360),
+  imr05ang: joi.number().min(0).max(360),
+  observation: joi.string().empty('')
+});
+
+const updatefunctEvs06Schema = joi.object<CreateFunctionalEv>({
+  iml06quad: joi.number().min(0).max(999999),
+  imr06quad: joi.number().min(0).max(999999),
+  iml06isqui: joi.number().min(0).max(999999),
+  imr06isqui: joi.number().min(0).max(999999),
+  observation: joi.string().empty('')
+});
+
+const updatefunctEvs07Schema = joi.object<CreateFunctionalEv>({
+  cmj07: joi.number().min(0).max(999999),
+  iml07sh: joi.number().min(0).max(999999),
+  imr07sh: joi.number().min(0).max(999999),
+  observation: joi.string().empty('')
+});
+
+const updatefunctEvs08Schema = joi.object<CreateFunctionalEv>({
+  cmj08: joi.number().min(0).max(999999),
+  sj08: joi.number().min(0).max(999999),
+  iml08cmjuni: joi.number().min(0).max(999999),
+  imr08cmjuni: joi.number().min(0).max(999999),
+  observation: joi.string().empty('')
+});
+
 const functEvSchemas = {
   functEvs01Schema,
   functEvs02Schema,
@@ -65,6 +120,17 @@ const functEvSchemas = {
   functEvs06Schema,
   functEvs07Schema,
   functEvs08Schema
-} ;
+};
 
-export { functEvSchemas };
+const updateFunctEvSchemas = {
+  updatefunctEvs01Schema,
+  updatefunctEvs02Schema,
+  updatefunctEvs03Schema,
+  updatefunctEvs04Schema,
+  updatefunctEvs05Schema,
+  updatefunctEvs06Schema,
+  updatefunctEvs07Schema,
+  updatefunctEvs08Schema
+};
+
+export { functEvSchemas, updateFunctEvSchemas };

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import status from 'http-status';
 import { patientsRepositories } from '../repositories/patients.repositories';
 import { patientsServices } from '../services/patients.services';
-import { CreatePatient } from '../protocols/patients.protocols';
+import { CreatePatient, UpdatePatient } from '../protocols/patients.protocols';
 
 export async function postPatient(req: Request, res: Response) {
   const patient = req.body as CreatePatient;
@@ -30,4 +30,13 @@ export async function getPatient(req: Request, res: Response) {
   const patient = await patientsServices.mountPatient(id);
 
   res.status(status.OK).send(patient);
+}
+
+export async function updatePatient(req: Request, res: Response) {
+  const { id } = req.params;
+  const body = req.body;
+
+  await patientsRepositories.updatePatient(parseInt(id), body);
+
+  res.sendStatus(status.CREATED);
 }

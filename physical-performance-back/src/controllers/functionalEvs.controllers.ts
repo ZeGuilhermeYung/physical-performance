@@ -6,11 +6,11 @@ import { evaluationsRepositories } from '../repositories/evaluations.repositorie
 import { evaluationServices } from '../services/evaluations.services';
 import functionalEvRepositories from '../repositories/functionalEvs.repositories';
 
-async function postFunctEv(req: Request, res: Response) {
-  const { evType, evaluationId, evCategory } = req.params as FunctionalEvParams;
+export async function postFunctEv(req: Request, res: Response) {
+  const { evaluationId, evCategory } = req.params as FunctionalEvParams;
   const body = req.body as CreateFunctionalEv;
 
-  await functionalEvsServices.mountEvType(body, evType, evCategory, parseInt(evaluationId));
+  await functionalEvsServices.mountFunctEv(body, evCategory, parseInt(evaluationId));
   
   const finishedAt = evaluationServices.insertNowDate();
   
@@ -19,7 +19,7 @@ async function postFunctEv(req: Request, res: Response) {
   res.sendStatus(status.CREATED);
 }
 
-async function updateFunctEv(req: Request, res: Response) {
+export async function updateFunctEv(req: Request, res: Response) {
   const { functEvId, evCategory } = req.params as FunctionalEvParams;
   const body = req.body as UpdateFunctionalEv;
 
@@ -27,5 +27,3 @@ async function updateFunctEv(req: Request, res: Response) {
 
   res.sendStatus(status.CREATED);
 }
-
-export { postFunctEv, updateFunctEv };

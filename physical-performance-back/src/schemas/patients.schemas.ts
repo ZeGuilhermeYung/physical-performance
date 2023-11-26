@@ -23,4 +23,18 @@ const patientSchema = joi.object<CreatePatient>({
     height: joi.number().min(1).max(300).required()
 });
 
-export default patientSchema;
+const updatePatientSchema = joi.object<CreatePatient>({
+    name: joi.string(),
+    email: joi.string().pattern(emailRegex).empty(''),
+    phone: joi.string().pattern(phoneNumberRegex).min(8).max(13).empty(''),
+    photo: joi.string().empty(''),
+    gender: joi.string().min(1).max(1),
+    birthdate: joiWithDate.date().format("YYYY-MM-DD").max('now'),
+    domSm: joi.string().min(3).max(10),
+    domIm: joi.string().min(3).max(10),
+    sports: joi.string().empty(''),
+    weight: joi.number().min(1).max(1000),
+    height: joi.number().min(1).max(300)
+});
+
+export { patientSchema, updatePatientSchema };

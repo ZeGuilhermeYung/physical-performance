@@ -1,29 +1,35 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
   extensions = [pgcrypto, citext, unaccent]
 }
 
 model evaluations {
-  id         Int         @id @default(autoincrement())
-  patientId  Int
-  evType     String      @db.VarChar(50)
-  createdAt  DateTime    @default(now()) @db.Timestamp(0)
-  finishedAt DateTime    @default(now()) @db.Timestamp(0)
-  patients   patients?   @relation(fields: [patientId], references: [id], onDelete: Cascade)
-  functEvs01 functEvs01?
-  functEvs02 functEvs02?
-  functEvs03 functEvs03?
-  functEvs04 functEvs04?
-  functEvs05 functEvs05?
-  functEvs06 functEvs06?
-  functEvs07 functEvs07?
-  functEvs08 functEvs08?
+  id                Int                @id @default(autoincrement())
+  patientId         Int
+  evType            String             @db.VarChar(50)
+  createdAt         DateTime           @default(now()) @db.Timestamp(0)
+  finishedAt        DateTime           @default(now()) @db.Timestamp(0)
+  patients          patients?          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  functEvs01        functEvs01?
+  functEvs02        functEvs02?
+  functEvs03        functEvs03?
+  functEvs04        functEvs04?
+  functEvs05        functEvs05?
+  functEvs06        functEvs06?
+  functEvs07        functEvs07?
+  functEvs08        functEvs08?
+  physicalEvsImages physicalEvsImages?
+  physicalEvs01     physicalEvs01?
+  physicalEvs02     physicalEvs02?
+  physicalEvs03     physicalEvs03?
+  physicalEvs04     physicalEvs04?
+  physicalEvs05     physicalEvs05?
 }
 
 model functEvs01 {
@@ -105,18 +111,92 @@ model functEvs08 {
   evaluations  evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
 }
 
+model physicalEvsImages {
+  id           Int          @id @default(autoincrement())
+  frontImage   String
+  backImage    String
+  rightImage   String
+  leftImage    String
+  evaluationId Int          @unique
+  evaluations  evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+}
+
+model physicalEvs01 {
+  id                Int          @id @default(autoincrement())
+  chest             Decimal      @db.Decimal(5, 1)
+  abdomen           Decimal      @db.Decimal(5, 1)
+  rRelaxedBiceps    Decimal      @db.Decimal(5, 1)
+  rContractedBiceps Decimal      @db.Decimal(5, 1)
+  lRelaxedBiceps    Decimal      @db.Decimal(5, 1)
+  lContractedBiceps Decimal      @db.Decimal(5, 1)
+  rRelaxedThigh     Decimal      @db.Decimal(5, 1)
+  rContractedThigh  Decimal      @db.Decimal(5, 1)
+  lRelaxedThigh     Decimal      @db.Decimal(5, 1)
+  lContractedThigh  Decimal      @db.Decimal(5, 1)
+  rRelaxedCalf      Decimal      @db.Decimal(5, 1)
+  rContractedCalf   Decimal      @db.Decimal(5, 1)
+  lRelaxedCalf      Decimal      @db.Decimal(5, 1)
+  lContractedCalf   Decimal      @db.Decimal(5, 1)
+  evaluationId      Int          @unique
+  evaluations       evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+}
+
+model physicalEvs02 {
+  id             Int          @id @default(autoincrement())
+  totalBodyWater Decimal      @db.Decimal(5, 1)
+  proteins       Decimal      @db.Decimal(5, 1)
+  minerals       Decimal      @db.Decimal(5, 1)
+  bodyFatMass    Decimal      @db.Decimal(5, 1)
+  leanBodyMass   Decimal      @db.Decimal(5, 1)
+  fatFreeDough   Decimal      @db.Decimal(5, 1)
+  bony           Decimal      @db.Decimal(5, 1)
+  evaluationId   Int          @unique
+  evaluations    evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+}
+
+model physicalEvs03 {
+  id                 Int          @id @default(autoincrement())
+  weight             Decimal      @db.Decimal(5, 1)
+  skeletalMuscleMass Decimal      @db.Decimal(5, 1)
+  bodyFatMass        Decimal      @db.Decimal(5, 1)
+  evaluationId       Int          @unique
+  evaluations        evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+}
+
+model physicalEvs04 {
+  id                 Int          @id @default(autoincrement())
+  bodyMassIndex      Decimal      @db.Decimal(5, 1)
+  bodyFatPercentage  Decimal      @db.Decimal(5, 1)
+  waistHipRatio      Decimal      @db.Decimal(5, 1)
+  basalMetabolicRate Decimal      @db.Decimal(5, 1)
+  fitnessScore       Int
+  evaluationId       Int          @unique
+  evaluations        evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+}
+
+model physicalEvs05 {
+  id                      Int          @id @default(autoincrement())
+  bodyCompositionAnalysis String?      @db.VarChar(255)
+  bodyFatPercentage       String?      @db.VarChar(255)
+  waistHipRatio           String?      @db.VarChar(255)
+  evaluationId            Int          @unique
+  evaluations             evaluations? @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+}
+
 model patients {
-  id          Int           @id @default(autoincrement())
-  name        String        @unique @db.Citext
-  email       String?       @db.VarChar(80)
-  phone       String?       @db.VarChar(11)
-  photo       String
-  gender      String        @db.VarChar(1)
-  birthdate   DateTime      @db.Date
-  domSm       String        @db.VarChar(10)
-  domIm       String        @db.VarChar(10)
-  sports      String?       @db.VarChar(255)
-  weight      Int
-  height      Int
-  evaluations evaluations[]
+  id             Int           @id @default(autoincrement())
+  name           String        @unique @db.Citext
+  email          String?       @db.VarChar(80)
+  phone          String?       @db.VarChar(11)
+  photo          String
+  gender         String        @db.VarChar(1)
+  birthdate      DateTime      @db.Date
+  domSm          String        @db.VarChar(10)
+  domIm          String        @db.VarChar(10)
+  sports         String?       @db.VarChar(255)
+  weight         Int
+  height         Int
+  injurysHistory String?       @db.VarChar(255)
+  diseaseHistory String?       @db.VarChar(255)
+  evaluations    evaluations[]
 }

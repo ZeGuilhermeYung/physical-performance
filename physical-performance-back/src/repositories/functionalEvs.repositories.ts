@@ -53,7 +53,7 @@ async function updateFunctEv(id: number, body: UpdateFunctionalEv, evCategory: s
 async function getFunctEvs(evaluationId: number): Promise<GetFunctionalEvs> {
   const functEvs = await prisma.evaluations.findUnique({
     where: { id: evaluationId },
-    select: {
+    include: {
       functEvs01: true,
       functEvs02: true,
       functEvs03: true,
@@ -75,6 +75,7 @@ async function getFunctEvs(evaluationId: number): Promise<GetFunctionalEvs> {
     functEvs.functEvs07,
     functEvs.functEvs08
   ];
+  
   return result;
 };
 

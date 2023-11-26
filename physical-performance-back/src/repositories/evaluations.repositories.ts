@@ -1,7 +1,6 @@
 import prisma from "../database/db";
 import { Evaluation } from "../protocols/evaluations.protocols";
 import { GetPatientEvaluations } from "../protocols/patients.protocols";
-import { GetFunctionalEvs } from "../protocols/functionalEvs.protocols";
 
 async function insertEvaluation(patientId: number, evType: string, createdAt: Date): Promise<Evaluation> {
   const evaluation: Evaluation = await prisma.evaluations.create({

@@ -1,5 +1,5 @@
 import prisma from "../database/db";
-import { CreatePatient, CreatePatientInfo, Patient } from "../protocols/patients.protocols";
+import { CreatePatient, CreatePatientInfo, Patient, UpdatePatient } from "../protocols/patients.protocols";
 
 async function insertPatient(data: CreatePatient): Promise<Patient> {
   const formattedData = {
@@ -9,6 +9,13 @@ async function insertPatient(data: CreatePatient): Promise<Patient> {
 
   return prisma.patients.create({
     data: formattedData,
+  });
+}
+
+async function updatePatient(id: number, data: UpdatePatient) {
+  return prisma.patients.update({
+    where: { id },
+    data
   });
 }
 
@@ -68,6 +75,7 @@ async function getPatient(id: number) {
 
 export const patientsRepositories = {
   insertPatient,
+  updatePatient,
   getPatients,
   findPatients,
   getPatientByName,
