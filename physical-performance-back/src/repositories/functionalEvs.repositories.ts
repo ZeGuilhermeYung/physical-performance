@@ -23,6 +23,17 @@ const updateFunctEvFunction: FunctEvFunction = {
   functEvs08: prisma.functEvs08.update,
 };
 
+const findFunctEvFunction: FunctEvFunction = {
+  functEvs01: prisma.functEvs01.findFirst,
+  functEvs02: prisma.functEvs02.findFirst,
+  functEvs03: prisma.functEvs03.findFirst,
+  functEvs04: prisma.functEvs04.findFirst,
+  functEvs05: prisma.functEvs05.findFirst,
+  functEvs06: prisma.functEvs06.findFirst,
+  functEvs07: prisma.functEvs07.findFirst,
+  functEvs08: prisma.functEvs08.findFirst,
+};
+
 async function insertFunctEv(body: CreateFunctionalEv, evCategory: string): Promise<FunctionalEv>{
   const data = Object.fromEntries(
     Object.entries(body)
@@ -45,6 +56,14 @@ async function updateFunctEv(id: number, body: UpdateFunctionalEv, evCategory: s
   const functEv: FunctionalEv = await updateFunctEvFunction[evCategory]({
       data,
       where: { id }
+  });
+
+  return functEv;
+}
+
+async function findFunctEv(evaluationId: number, evCategory: string): Promise<FunctionalEv>{
+  const functEv: FunctionalEv = await findFunctEvFunction[evCategory]({
+      where: { evaluationId }
   });
 
   return functEv;
@@ -82,6 +101,7 @@ async function getFunctEvs(evaluationId: number): Promise<GetFunctionalEvs> {
 const functionalEvRepositories = {
   insertFunctEv,
   updateFunctEv,
+  findFunctEv,
   getFunctEvs
 };
 

@@ -1,10 +1,15 @@
 import { Decimal } from "@prisma/client/runtime/library";
+import { conflictError } from "../errors/errors";
 import { CreateFunctionalEv, FunctionalEv } from "../protocols/functionalEvs.protocols";
 import functionalEvRepositories from "../repositories/functionalEvs.repositories";
 
 async function mountFunctEv(body: CreateFunctionalEv, evCategory: string): Promise<FunctionalEv> {
   const { evaluationId, observation } = body;
- 
+  const isUnique = await functionalEvRepositories.findFunctEv(evaluationId, evCategory);
+  
+  if (isUnique)
+    throw conflictError("Já existe esta avaliação cadastrada!");
+
   switch (evCategory) {
     case "functEvs01":
       const body01 = body as { iml01: number; imr01: number; observation?: string };

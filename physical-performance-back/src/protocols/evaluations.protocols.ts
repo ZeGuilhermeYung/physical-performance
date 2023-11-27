@@ -3,10 +3,15 @@ export type NewEvaluation = {
   patientId: number | string;
   evType: string;
   createdAt: Date | string;
-  complete: boolean;
+  finishedAt: Date | string;
+  finishedAtTime: Date | string;
+  duration: {
+    formattedMessage: string;
+    time: number;
+  }
 };
 
-export type Evaluation = Omit<NewEvaluation, "complete">
+export type Evaluation = Omit<NewEvaluation, "duration" | "finishedAtTime">
 
 export type EvaluationFunction = {
   [key: string]: (data: any) => Promise<any>;

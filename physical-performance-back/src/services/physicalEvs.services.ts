@@ -1,10 +1,15 @@
 import { Decimal } from "@prisma/client/runtime/library";
+import { conflictError } from "../errors/errors";
 import { CreatePhysicalEv, PhysicalEv } from "../protocols/physicalEvs.protocols";
 import physicalEvRepositories from "../repositories/physicalEvs.repositories";
 
 async function mountPhysicalEv(body: CreatePhysicalEv, evCategory: string): Promise<PhysicalEv> {
   const { evaluationId } = body;
+  const isUnique = await physicalEvRepositories.findPhysicalEv(evaluationId, evCategory);
   
+  if (isUnique)
+    throw conflictError("Já existe esta avaliação cadastrada!");
+
   switch (evCategory) {
     case "physicalEvsImages":
       const bodyImages = body as { frontImage: string; backImage: string; rightImage: string; leftImage: string };

@@ -11,12 +11,21 @@ const createPhysicalEvFunction: PhysicalEvFunction = {
 };
 
 const updatePhysicalEvFunction: PhysicalEvFunction = {
-  physicalEvsImages: prisma.physicalEvsImages.create,
+  physicalEvsImages: prisma.physicalEvsImages.update,
   physicalEvs01: prisma.physicalEvs01.update,
   physicalEvs02: prisma.physicalEvs02.update,
   physicalEvs03: prisma.physicalEvs03.update,
   physicalEvs04: prisma.physicalEvs04.update,
   physicalEvs05: prisma.physicalEvs05.update
+};
+
+const findPhysicalEvFunction: PhysicalEvFunction = {
+  physicalEvsImages: prisma.physicalEvsImages.findFirst,
+  physicalEvs01: prisma.physicalEvs01.findFirst,
+  physicalEvs02: prisma.physicalEvs02.findFirst,
+  physicalEvs03: prisma.physicalEvs03.findFirst,
+  physicalEvs04: prisma.physicalEvs04.findFirst,
+  physicalEvs05: prisma.physicalEvs05.findFirst
 };
 
 async function insertPhysicalEv(body: CreatePhysicalEv, evCategory: string): Promise<PhysicalEv>{
@@ -44,6 +53,14 @@ async function updatePhysicalEv(id: number, body: UpdatePhysicalEv, evCategory: 
   });
 
   return physicalEv;
+}
+
+async function findPhysicalEv(evaluationId: number, evCategory: string): Promise<PhysicalEv>{
+  const functEv: PhysicalEv = await findPhysicalEvFunction[evCategory]({
+      where: { evaluationId }
+  });
+
+  return functEv;
 }
 
 async function getPhysicalEvs(evaluationId: number): Promise<GetPhysicalEvs> {
@@ -74,6 +91,7 @@ async function getPhysicalEvs(evaluationId: number): Promise<GetPhysicalEvs> {
 const physicalEvRepositories = {
   insertPhysicalEv,
   updatePhysicalEv,
+  findPhysicalEv,
   getPhysicalEvs
 };
 

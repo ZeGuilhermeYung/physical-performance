@@ -35,33 +35,58 @@ function returnAge(birthdate: string): number {
   return age;
 }
 
-export function getFormattedDateDifference(targetDate: Date): {formattedMessage: string, days: number} {
-  const currentDate = new Date();
+export function getFormattedDateDifference(currentDate: Date, targetDate: Date): {formattedMessage: string, time: number} {
   const timeDifference = currentDate.getTime() - targetDate.getTime();
+
+  if (currentDate < new Date()) {
+    const seconds = Math.floor(timeDifference / 1000);
+    if (seconds < 60) return {
+      formattedMessage: `${seconds}s`,
+      time: seconds
+    };
+
+    const minutes = Math.floor(seconds / 60);
+    const remainingSecondsAfterMinutes = seconds % 60;
+    if (minutes < 60) return {
+      formattedMessage: `${minutes}min ${remainingSecondsAfterMinutes}s`,
+      time: seconds
+    };
+     
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutesAfterHours = seconds % 3600;
+    const remainingSecondsAfterHours = seconds % 3600;
+    if (hours < 24) return {
+      formattedMessage: `${hours}h ${remainingMinutesAfterHours}min ${remainingSecondsAfterHours}s`,
+      time: seconds
+    };
+  }
+  
   const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-  if (days === 0) return { formattedMessage: "Hoje", days};
-  if (days === 1) return { formattedMessage: "Ontem", days};
-  if (days === 2) return { formattedMessage: "Anteontem", days};
-  if (days === 7) return { formattedMessage: "Há uma semana", days};
-  if (days === 14 || days === 21 || days === 28)
-    return { formattedMessage: `Há ${days / 7} semanas`, days};
+  if (currentDate >= new Date()) {
+    if (days === 0) return { formattedMessage: "Hoje", time: days};
+    if (days === 1) return { formattedMessage: "Ontem", time: days};
+    if (days === 2) return { formattedMessage: "Anteontem", time: days};
+    if (days === 7) return { formattedMessage: "Há uma semana", time: days};
+    if (days === 14 || days === 21 || days === 28)
+      return { formattedMessage: `Há ${days / 7} semanas`, time: days};
+  }
 
   const years = Math.floor(days / 365);
   const remainingDaysAfterYears = days % 365;
   const months = Math.floor(remainingDaysAfterYears / 30);
   const remainingDays = remainingDaysAfterYears % 30;
 
-  
-
   const yearText = years > 0 ? `${years} ano${years > 1 ? 's' : ''}` : '';
   const monthText = months > 0 ? `${months} ${months > 1 ? 'meses' : 'mês'}` : '';
   const dayText = remainingDays > 0 ? `${remainingDays} dia${remainingDays > 1 ? 's' : ''}` : '';
 
   const parts = [yearText, monthText, dayText].filter(Boolean);
-  const formattedMessage = `Há ${parts.join(' ')}`;
+  const formattedMessage = currentDate >= new Date() ? 
+    `Há ${parts.join(' ')}`
+    : `${parts.join(' ')}`;
 
-  return { formattedMessage, days };
+  return { formattedMessage, time: days };
 }
 
 async function mountPatientsInfo(name?: string): Promise<PatientInfo[]> {
@@ -83,10 +108,11 @@ async function mountPatientsInfo(name?: string): Promise<PatientInfo[]> {
       gender: patientInfo.gender,
       age: returnAge(dayjs(patientInfo.birthdate).utc().format('DD/MM/YYYY')),
       lastEvDate: patientInfo.evaluations ?
-        getFormattedDateDifference(patientInfo.evaluations.finishedAt)
+        getFormattedDateDifference(new Date(), patientInfo.evaluations.finishedAt)
         : "Não há avaliações"
     }
   ));
+  console.log(new Date());
   return formattedPatientsInfo;
 }
 
