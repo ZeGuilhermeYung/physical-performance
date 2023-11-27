@@ -17,7 +17,7 @@ export default function Patients () {
     .catch((error) => {
       alert(error.message);
     });
-  }, [])
+  }, []);
 
   return (
     <Article>
@@ -33,7 +33,7 @@ export default function Patients () {
   );
 }
 
-const Article = styled.article`
+const Article = styled.section`
   width: 100%;
   height: 100%;
   display: flex;

@@ -15,8 +15,10 @@ export default function Patient ( {id, name, gender, age, lastEvDate} ) {
         <h3>última avaliação</h3>
       </NameContainer>
       <figure>
-        <h3>sexo: {gender}</h3>
-        <h3>idade: {age}</h3>
+        <GenderContainer>
+          <h3>Sexo: {gender === "M" ? "Masculino" : "Feminino"}</h3>
+        </GenderContainer>
+        <h3>Idade: {age} anos</h3>
         <TimeSince>
           <h3>{lastEvDate.formattedMessage}</h3>
         </TimeSince>
@@ -52,6 +54,14 @@ const PatientCard = styled.button`
     align-items: center;
     box-sizing: border-box;
   }`
+
+const GenderContainer = styled.div`
+  width: 150px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;`
 
 const NameContainer = styled.section`
   width: 100%;

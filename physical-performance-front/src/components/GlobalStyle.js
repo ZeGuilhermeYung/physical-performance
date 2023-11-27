@@ -73,8 +73,8 @@ body {
 }
 h1 {
   color: #FFFFFF;
-  font-family: 'Graduate';
-  font-size: 49px;
+  font-family: 'Kdam Thmor Pro';
+  font-size: 40px;
   font-weight: 700;
   letter-spacing: 2.45px;
 }
@@ -90,7 +90,7 @@ h3 {
 h4 {
   color: #FFFFFF;
   //font-family: 'Lato';
-  font-size: 25px;
+  font-size: 23px;
 }
 h5 {
   color: #FFFFFF;

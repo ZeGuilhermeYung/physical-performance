@@ -16,7 +16,9 @@ export default function HomePage ({ children }) {
           <Title>
             <h1>{title}</h1>
           </Title>
-          {children}
+          <CardsAndDashboard>
+            {children}
+          </CardsAndDashboard>
         </Container>  
       </main>
     </Private>
@@ -25,7 +27,7 @@ export default function HomePage ({ children }) {
 
 const Private = styled.section`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding-top: 70px;
   display: flex;
   flex-direction: column;
@@ -43,18 +45,33 @@ const Private = styled.section`
   const Container = styled.article`
     width: 100%;
     height: 100%;
+    margin: 0 0 50px 380px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     box-sizing: border-box;`
 
   const Title = styled.div`
     width: 100%;
-    height: 170px;
-    padding-left: 100px;
+    height: 120px;
+    background-color: #20324E;
+    padding-left: 150px;
+    position: fixed;
+    left: 380px;
+    top: 70px;
+    z-index: 3;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    box-sizing: border-box;
-  `;
+    box-sizing: border-box;`
+    
+  const CardsAndDashboard = styled.figure`
+    width: 100%;
+    height: 100%;
+    margin-top: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;`;
