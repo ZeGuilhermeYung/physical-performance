@@ -41,7 +41,7 @@ const EvaluationCard = styled.button`
   figure {
     width: 100%;
     height: 115px;
-    background-color: #0E2237;
+    background-color: #001522;
     border-radius: 0 0 15px 15px;
     padding: 10px 0 10px 0;
     display: flex;

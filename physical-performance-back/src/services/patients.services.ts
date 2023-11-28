@@ -93,14 +93,14 @@ async function mountPatientsInfo(name?: string): Promise<PatientInfo[]> {
   let patientsInfo: CreatePatientInfo[];
   
   if (name) {
-    patientsInfo = await patientsRepositories.findPatients(name);
+    patientsInfo = await patientsRepositories.getPatients(name);
 
     if (patientsInfo.length === 0)
       throw notFound("Nenhum paciente encontrado com este nome!");
   } else {
     patientsInfo = await patientsRepositories.getPatients();
   }
-
+  console.log(patientsInfo)
   const formattedPatientsInfo: PatientInfo[] = patientsInfo.map(patientInfo => (
     {
       id: patientInfo.id,
@@ -109,10 +109,10 @@ async function mountPatientsInfo(name?: string): Promise<PatientInfo[]> {
       age: returnAge(dayjs(patientInfo.birthdate).utc().format('DD/MM/YYYY')),
       lastEvDate: patientInfo.evaluations ?
         getFormattedDateDifference(new Date(), patientInfo.evaluations.finishedAt)
-        : "Não há avaliações"
+        : {formattedMessage: "Nunca", time: 0}
     }
   ));
-  console.log(new Date());
+
   return formattedPatientsInfo;
 }
 
@@ -120,7 +120,6 @@ async function mountPatient(id: string): Promise<Patient> {
   const patient: Patient = await patientsRepositories.getPatient(parseInt(id));
   const evaluations = await evaluationsRepositories.getPatientEvaluations(parseInt(id));
   const newEvaluations = await evaluationServices.isEvaluationComplete(evaluations.evaluations);
-  
   patient.birthdate = dayjs(patient.birthdate).utc().format('DD/MM/YYYY');
 
   const patientEvaluations: PatientEvaluations = { ...patient, age: returnAge(patient.birthdate), evaluations: newEvaluations };

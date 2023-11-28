@@ -19,7 +19,7 @@ async function updatePatient(id: number, data: UpdatePatient) {
   });
 }
 
-async function getPatients(): Promise<CreatePatientInfo[]> {
+async function getPatients(name?: string): Promise<CreatePatientInfo[]> {
   const patientsInfo = await prisma.patients.findMany({
     select: {
       id: true,
@@ -32,8 +32,14 @@ async function getPatients(): Promise<CreatePatientInfo[]> {
         take: 1,
       },
     },
+    where: {
+      name: {
+        contains: name,
+        mode: 'insensitive',
+      },
+    },
   });
-
+  
   return patientsInfo.map(patient => {
     const latestEvaluation = patient.evaluations[0];
     return {
@@ -45,18 +51,6 @@ async function getPatients(): Promise<CreatePatientInfo[]> {
         ? { finishedAt: latestEvaluation.finishedAt }
         : undefined,
     };
-  });
-}
-
-async function findPatients(name: string) {
-  return prisma.patients.findMany({
-    select: { id: true, name: true, gender: true, birthdate: true },
-    where: {
-      name: {
-        contains: name,
-        mode: 'insensitive',
-      },
-    },
   });
 }
 
@@ -77,7 +71,6 @@ export const patientsRepositories = {
   insertPatient,
   updatePatient,
   getPatients,
-  findPatients,
   getPatientByName,
   getPatient
 };

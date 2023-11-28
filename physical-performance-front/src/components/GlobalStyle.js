@@ -65,7 +65,7 @@ button {
 
 body {
   width: 100%;
-  background-color: #20324E;
+  background-color: #162731;
   font-family: 'Teko', sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -80,8 +80,8 @@ h1 {
 }
 h2 {
   color: #FFFFFF;
-  font-size: 43px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 500;
 }
 h3 {
   color: #FFFFFF;
@@ -105,9 +105,7 @@ h6 {
   text-align: left;
 }
 ::placeholder, ::-webkit-input-placeholder, :-webkit-autofill {
-  font-size: 27px;
-  font-weight: 700;
-  color: #9F9F9F;
-}
-`;
+  font-size: 20px;
+  color: #1E3243;
+}`;
  

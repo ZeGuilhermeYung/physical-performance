@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { getPatientById } from "../../services/Patients.APIs";
 import { useParams } from "react-router-dom";
-import logo from "../../assets/img/logo-pro-sport.png";
+import logo from "../../assets/img/logo-pro-sport3.png";
 
 export default function Aside () {
   const [patient, setPatient] = useState({});
@@ -82,7 +82,7 @@ export default function Aside () {
 const PatientMenu = styled.aside`
   width: 380px;
   height: 100%;
-  background-color: #2C405E;
+  background-color: #131F2B;
   box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.15);
   padding: 20px 0 20px 0;
   position: fixed;
@@ -104,7 +104,6 @@ const AvatarImg = styled.img`
   border-radius: 50%;
   margin: 35px 0 35px 0;
   object-fit: cover;
-
   h3 {
     font-size: 32px;
     font-weight: 500;
@@ -123,7 +122,7 @@ const PatientInfo = styled.article`
     width: 100%;
     max-height: 100%;
     padding: 20px;
-    border: 1px solid #526A89;
+    border: 1px solid #3DA59B;
     border-radius: 0 0 15px 15px;
     display: flex;
     flex-direction: column;
@@ -134,7 +133,7 @@ const PatientInfo = styled.article`
   li {
     width: 100%;
     height: 100%;
-    border-bottom: 1px solid #526A89;
+    border-bottom: 1px solid #3DA59B;
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
@@ -146,7 +145,7 @@ const PatientInfo = styled.article`
     max-height: 100px;
     padding: 5px 0 5px 0;
     border-radius: 7px 7px 15px 15px;
-    background-color: #526A89;
+    background-color: #3DA59B;
     display: flex;
     justify-content: center;
     align-items: center;

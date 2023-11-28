@@ -1,15 +1,35 @@
+import { useState, useContext, useRef, useEffect } from "react";
 import styled from "styled-components";
-import Header from "./Header";
+import Header from "./header/Header";
 import Aside from "./Aside";
-import { useContext } from "react";
 import TitleContext from "../../context/TitleContext";
 
 export default function HomePage ({ children }) {
+  const privateRef = useRef(null);
+  const [searchList, setSearchList] = useState(false);
   const { title } = useContext(TitleContext);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchList && privateRef.current && !privateRef.current.contains(event.target)) {
+        setSearchList(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [searchList]);
+
   return (
-    <Private>
-      <Header />
+    <Private
+      ref={privateRef}
+        onClick={() => {if (searchList) setSearchList(false)}} >
+      <Header
+        searchList={searchList}
+        setSearchList={setSearchList} />
       <main>
         <Aside />
         <Container>
@@ -41,7 +61,7 @@ const Private = styled.section`
     align-items: center;
     justify-content: space-between;
   }`
-  
+
   const Container = styled.article`
     width: 100%;
     height: 100%;
@@ -55,7 +75,7 @@ const Private = styled.section`
   const Title = styled.div`
     width: 100%;
     height: 120px;
-    background-color: #20324E;
+    background-color: #162731;
     padding-left: 150px;
     position: fixed;
     left: 380px;

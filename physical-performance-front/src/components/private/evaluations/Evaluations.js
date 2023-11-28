@@ -13,21 +13,24 @@ export default function Evaluations () {
   useEffect(() => {
     setTitle("Avaliações");
     getPatientById(patientId)
-    .then(response => {
-			setEvaluations(response.data.evaluations);
+    .then(res => {
+      if (res.data.evaluations) {
+        setEvaluations(res.data.evaluations);
+      }
 		})
     .catch((error) => {
       alert(error.message);
     });
   }, [patientId]);
-
+  console.log(evaluations.length > 0)
   return (
     <>
       <EvaluationType>
         <h1>Funcionais</h1>
       </EvaluationType>
       <EvaluationsContainer>
-        {evaluations.filter(evaluation => 
+      {evaluations.length > 0 ?
+        evaluations.filter(evaluation => 
           evaluation.evType === "functional")
           .map((evaluation, index) =>
             <Evaluation
@@ -37,14 +40,16 @@ export default function Evaluations () {
             evType={evaluation.evType}
             finishedAt={evaluation.finishedAt}
             finishedAtTime={evaluation.finishedAtTime}
-            duration={evaluation.duration} />)}
+            duration={evaluation.duration} />)
+          : <h2>Nenhuma avaliação realizada</h2>}
       </EvaluationsContainer>
       <EvaluationType>
         <h1>Físicas</h1>
       </EvaluationType>
       <EvaluationsContainer>
-        {evaluations.filter(evaluation => 
-          evaluation.evType === "physical")
+        {evaluations.length > 0 ?
+          evaluations.filter(evaluation => 
+            evaluation.evType === "physical")
             .map((evaluation, index) =>
               <Evaluation
               key={index}
@@ -53,7 +58,8 @@ export default function Evaluations () {
               evType={evaluation.evType}
               finishedAt={evaluation.finishedAt}
               finishedAtTime={evaluation.finishedAtTime}
-              duration={evaluation.duration} />)}
+              duration={evaluation.duration} />)
+            : <h2>Nenhuma avaliação realizada</h2>} 
       </EvaluationsContainer>
     </>
   );

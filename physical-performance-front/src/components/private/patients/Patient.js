@@ -10,7 +10,7 @@ export default function Patient ( {id, name, gender, age, lastEvDate} ) {
 
   return (
     <PatientCard onClick={() => navigateToPatient()}>
-      <NameContainer days={lastEvDate.days} >
+      <NameContainer days={lastEvDate.time} >
         <h3>{name}</h3>
         <h3>última avaliação</h3>
       </NameContainer>
@@ -46,7 +46,7 @@ const PatientCard = styled.button`
   figure {
     width: 100%;
     height: 65px;
-    background-color: #0E2237;
+    background-color: #001522;
     border-radius: 0 0 15px 15px;
     padding: 0 30px 0 30px;
     display: flex;

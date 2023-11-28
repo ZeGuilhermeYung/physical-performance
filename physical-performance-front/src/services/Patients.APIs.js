@@ -7,8 +7,10 @@ export function registerPatient (body) {
   return promise;
 };
 
-export function getPatients () {
-  const promise = axios.get(`${urlAPI}/patients`);
+export function getPatients (name) {
+  const promise = axios.get(`${urlAPI}/patients`, {
+    params: { name },
+  });
   return promise;
 };
 
