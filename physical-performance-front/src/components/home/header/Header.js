@@ -56,7 +56,7 @@ const RoutesButtons = styled.div`
 const HomeButtonConatiner = styled.div`
   width: 100px;
   height: 100%;
-  border-right: 1px solid #3DA59B;
+  border-right: 1px solid #05A9F1;
   cursor: pointer;
   display: flex;
   justify-content: center;

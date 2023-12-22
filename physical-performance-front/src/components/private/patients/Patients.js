@@ -24,7 +24,7 @@ export default function Patients () {
         alert(error.message);
       });
   }, [location.search]);
-  console.log(patients)
+
   return (
     <Article>
       {patients.map((patient, index) =>

@@ -91,7 +91,7 @@ const Wrapper = styled.input`
  outline: none;
 }
 :-webkit-autofill {
-  background-color: #3DA59B;
+  background-color: #05A9F1;
   opacity: 0.7;
 }
 :disabled {
@@ -102,7 +102,7 @@ const Wrapper = styled.input`
 const SubmitSearch = styled.div`
   width: 50px;
   height: 100%;
-  background-color: #3DA59B;
+  background-color: #05A9F1;
   border-radius: 0 7px 7px 0; 
   cursor: pointer;
   display: flex;
@@ -135,9 +135,9 @@ const ResultNamesList = styled.ul`
     height: 35px;
     padding: 0 5px 0 5px;
     cursor: pointer;
-    border-top: 1px solid #3DA59B;
+    border-top: 1px solid #05A9F1;
   }
   li:hover {
-    background-color: #3DA59B;
+    background-color: #05A9F1;
     transition-delay: 0.1s;
   }`;

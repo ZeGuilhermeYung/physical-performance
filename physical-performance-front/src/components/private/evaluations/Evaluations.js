@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { getPatientById } from "../../../services/Patients.APIs";
 import { useEffect, useState, useContext } from "react";
 import TitleContext from "../../../context/TitleContext";
-import Evaluation from "./Evaluation";
+import EvaluationInfo from "./EvaluationInfo";
 
 export default function Evaluations () {
   const { setTitle } = useContext(TitleContext);
@@ -16,13 +16,13 @@ export default function Evaluations () {
     .then(res => {
       if (res.data.evaluations) {
         setEvaluations(res.data.evaluations);
-      }
+      } else setEvaluations([]);
 		})
     .catch((error) => {
       alert(error.message);
     });
   }, [patientId]);
-  console.log(evaluations.length > 0)
+ 
   return (
     <>
       <EvaluationType>
@@ -33,7 +33,7 @@ export default function Evaluations () {
         evaluations.filter(evaluation => 
           evaluation.evType === "functional")
           .map((evaluation, index) =>
-            <Evaluation
+            <EvaluationInfo
             key={index}
             id={evaluation.id}
             patientId={evaluation.patientId}
@@ -51,7 +51,7 @@ export default function Evaluations () {
           evaluations.filter(evaluation => 
             evaluation.evType === "physical")
             .map((evaluation, index) =>
-              <Evaluation
+              <EvaluationInfo
               key={index}
               id={evaluation.id}
               patientId={evaluation.patientId}
@@ -68,7 +68,7 @@ export default function Evaluations () {
 const EvaluationsContainer = styled.div`
   width: 100%;
   padding: 40px 80px 0 80px;
-  margin-bottom: 20px;
+  //margin-bottom: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

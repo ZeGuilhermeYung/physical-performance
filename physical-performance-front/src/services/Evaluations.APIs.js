@@ -11,3 +11,8 @@ export function getPatientEvaluations(patientId) {
   const promise = axios.get(`${urlAPI}/patients/${patientId}/evaluations`);
   return promise;
 };
+
+export function getEvaluation(evType, id) {
+  const promise = axios.get(`${urlAPI}/evaluations/${evType}/${id}`);
+  return promise;
+};

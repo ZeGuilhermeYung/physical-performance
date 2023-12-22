@@ -5,7 +5,6 @@ import functEvsRouter from "./functionalEvs.routes";
 import physicalEvsRouter from "./physicalEvs.routes";
 import errorHandler from "../middlewares/error.handler";
 
-
 const router = Router();
 
 router.use(patientsRouter);

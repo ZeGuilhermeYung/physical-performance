@@ -6,6 +6,7 @@ import HomePage from "./home/HomePage";
 import Patients from "./private/patients/Patients";
 import Evaluations from "./private/evaluations/Evaluations";
 import FunctionalEv from "./private/FunctionalEv";
+import Evaluation from "./private/evaluation/Evaluation";
 
 export default function App () {
   const [title, setTitle] = useState("");
@@ -31,10 +32,10 @@ export default function App () {
                 </HomePage>
               } />
               <Route
-              path="/patients/:patientId/functional/:evOrder"
+              path="/patients/:patientId/evaluations/:evType/:id"
               element={
                 <HomePage>
-                  <FunctionalEv />
+                  <Evaluation />
                 </HomePage>
               } />
           </Routes>

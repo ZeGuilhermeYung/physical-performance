@@ -100,7 +100,7 @@ async function mountPatientsInfo(name?: string): Promise<PatientInfo[]> {
   } else {
     patientsInfo = await patientsRepositories.getPatients();
   }
-  console.log(patientsInfo)
+
   const formattedPatientsInfo: PatientInfo[] = patientsInfo.map(patientInfo => (
     {
       id: patientInfo.id,

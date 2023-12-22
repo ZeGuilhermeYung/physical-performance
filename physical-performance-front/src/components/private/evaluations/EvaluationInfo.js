@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import TitleContext from "../../../context/TitleContext";
 
-export default function Evaluation ( {id, patientId, evType, finishedAt, finishedAtTime, duration} ) {
+export default function EvaluationInfo ( {id, patientId, evType, finishedAt, finishedAtTime, duration} ) {
   const navigate = useNavigate();
+  const { setTitle } = useContext(TitleContext);
 
   function navigateToEvaluation () {
+    setTitle(`Avaliação ${evType === "functional" ? "funcional" : "física"} - ${finishedAt}`);
     navigate(`/patients/${patientId}/evaluations/${evType}/${id}`);
   }
 
@@ -58,9 +62,9 @@ const NameContainer = styled.section`
   width: 100%;
   height: 45px;
   background-color: ${props => (
-    (props.evsCompleted === "Em andamento") ? "#EDAD46"
-    : (props.evsCompleted === "Não iniciada") ? "#D63738"
-    : "#4C956A"
+    (props.evsCompleted === "Em andamento") ? "#E0BD55"
+    : (props.evsCompleted === "Não iniciada") ? "#E14D3F"
+    : "#3DA59B"
   )};
   border-radius: 7px 7px 0 0;
   display: flex;
