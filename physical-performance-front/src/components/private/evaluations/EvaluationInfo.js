@@ -1,15 +1,17 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import TitleContext from "../../../context/TitleContext";
 
 export default function EvaluationInfo ( {id, patientId, evType, finishedAt, finishedAtTime, duration} ) {
   const navigate = useNavigate();
-  const { setTitle } = useContext(TitleContext);
+
+  function formatDateForRoute(dateString) {
+    const [day, month, year] = dateString.split('/');
+    const isoFormattedDate = `${year}-${month}-${day}`;
+    return isoFormattedDate;
+  }
 
   function navigateToEvaluation () {
-    setTitle(`Avaliação ${evType === "functional" ? "funcional" : "física"} - ${finishedAt}`);
-    navigate(`/patients/${patientId}/evaluations/${evType}/${id}`);
+    navigate(`/patients/${patientId}/evaluations/${evType}/${id}/${formatDateForRoute(finishedAt)}`);
   }
 
   return (

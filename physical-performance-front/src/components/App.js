@@ -32,7 +32,7 @@ export default function App () {
                 </HomePage>
               } />
               <Route
-              path="/patients/:patientId/evaluations/:evType/:id"
+              path="/patients/:patientId/evaluations/:evType/:id/:finishedAt"
               element={
                 <HomePage>
                   <Evaluation />

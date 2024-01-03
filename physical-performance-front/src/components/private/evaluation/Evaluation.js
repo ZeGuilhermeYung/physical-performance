@@ -6,10 +6,18 @@ import { getEvaluation } from "../../../services/Evaluations.APIs";
 import EvTypeCard from "./EvTypeCard";
 
 export default function Evaluation () {
-  const { patientId, evType, id } = useParams();
+  const { patientId, evType, id, finishedAt } = useParams();
   const [evaluation, setEvaluation] = useState([]);
+  const { setTitle } = useContext(TitleContext);
+
+  function formatDateForTitle(dateString) {
+    const [day, month, year] = dateString.split('-');
+    const isoFormattedDate = `${year}/${month}/${day}`;
+    return isoFormattedDate;
+  }
 
   useEffect(() => {
+    setTitle(`Avaliação ${evType === "functional" ? "funcional" : "física"} - ${formatDateForTitle(finishedAt)}`);
     getEvaluation(evType, id)
     .then(res => {
       if (res.data) {

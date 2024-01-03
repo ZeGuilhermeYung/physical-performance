@@ -67,9 +67,9 @@ const NameContainer = styled.section`
   width: 100%;
   height: 45px;
   background-color: ${props => (
-    (props.days >= 28 && props.days < 42) ? "#EDAD46"
-    : (props.days >= 42) ? "#D63738"
-    : "#4C956A"
+    (props.days >= 28 && props.days < 42) ? "#E0BD55"
+    : (props.days >= 42) ? "#E14D3F"
+    : "#3DA59B"
   )};
   border-radius: 7px 7px 0 0;
   padding: 0 80px 0 20px;
