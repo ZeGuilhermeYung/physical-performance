@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export default function EvTypeCard ( {
   id,
-  index,
   evaluationId,
+  functEv,
   iml01,
   imr01,
   iml02,
@@ -29,22 +29,6 @@ export default function EvTypeCard ( {
   imr08cmjuni,
   observation} ) {
 
-  function functEvType(evArrayPosition) {
-    switch (evArrayPosition) {
-      case 0: return "Elevação de perna estendida";
-      case 1: return "Flexibilidade dos Isquiotibiais";
-      case 2: return "Teste de Thomas";
-      case 3: return "Rigidez de Rotadores de Quadril";
-      case 4: return "Lunge Test - ADM Dorsiflexão";
-      case 5: return "Força Isométrica";
-      case 6: return "Saltos horizontais";
-      case 7: return "Saltos verticais";
-    
-      default:
-        break;
-    }
-  };
-
   function functEv04Message(degrees) {
     if (degrees < 30) return ["Alta rigidez e baixa mobilidade", "Treino de mobilidade"];
     if (degrees <= 40 && degrees >= 30) return ["Normal", "Normal"];
@@ -58,15 +42,15 @@ export default function EvTypeCard ( {
   };
 
   function membersComparison(imlValue, imrValue) {
-    if (imlValue > imrValue) return 100 - Math.floor((imrValue/imlValue)*100)
-    else if (imlValue < imrValue) return 100 - Math.floor((imlValue/imrValue)*100)
+    if (imlValue > imrValue) return 100 - Math.round((imrValue/imlValue)*100)
+    else if (imlValue < imrValue) return 100 - Math.round((imlValue/imrValue)*100)
     else return 0;
   }
 
   return (
     <EvaluationCard>
       <NameContainer>
-        <h3>{functEvType(index)}</h3>
+        <h3>{functEv}</h3>
         <TableLine borderPosition="top">
           <LeftTableValue><h3>MIE</h3></LeftTableValue>
           <RightTableValue><h3>MID</h3></RightTableValue>
@@ -147,37 +131,49 @@ export default function EvTypeCard ( {
               <LeftTableValue><h3>{iml06isqui}cm</h3></LeftTableValue>
               <RightTableValue><h3>{imr06isqui}cm</h3></RightTableValue>
             </TableLine>
+            <TableLine margin="top">
+              <LeftTableValue blockSize="33%" color06qfIqt={Math.round((iml06isqui/iml06quad)*100)}><h3>{Math.round((iml06isqui/iml06quad)*100)}%</h3></LeftTableValue>
+              <MiddleTableValue color="title"><h3>QF-IQT</h3></MiddleTableValue>
+              <RightTableValue blockSize="33%" color06qfIqt={Math.round((imr06isqui/imr06quad)*100)}><h3>{Math.round((imr06isqui/imr06quad)*100)}%</h3></RightTableValue>
+            </TableLine>
           </>
           : null}
         {iml07sh || imr07sh || cmj07 ?
           <>
-            <TableLine borderPosition="bottom"><h3>CMJ</h3></TableLine>
-            <TableLine borderPosition="bottom"><h3>{cmj07}cm</h3></TableLine>
-            <TableLine borderPosition="bottom"><h3>Single Hop</h3></TableLine>
             <TableLine>
-              <LeftTableValue color06={iml07sh}><h3>{iml07sh}cm</h3></LeftTableValue>
-              <RightTableValue color06={imr07sh}><h3>{imr07sh}cm</h3></RightTableValue>
+              <LeftTableValue color="title" borderPosition="bottom"><h3>CMJ</h3></LeftTableValue>
+              <RightTableValue><h3>{cmj07}cm</h3></RightTableValue>
+            </TableLine>
+            <TableLine>
+              <LeftTableValue color="title"><h3>Single Hop</h3></LeftTableValue>
+              <RightTableValue color07shSh={membersComparison(iml07sh, imr07sh)}><h3>{membersComparison(iml07sh, imr07sh)}%</h3></RightTableValue>
+            </TableLine>
+            <TableLine>
+              <LeftTableValue><h3>{iml07sh}cm</h3></LeftTableValue>
+              <RightTableValue><h3>{imr07sh}cm</h3></RightTableValue>
             </TableLine>
           </>
           : null}
         {cmj08 || sj08 ?
           <>
-            <TableLine borderPosition="bottom">
-              <LeftTableValue><h3>CMJ</h3></LeftTableValue>
-              <RightTableValue color05={cmj08}><h3>{cmj08}cm</h3></RightTableValue>
+            <TableLine>
+              <LeftTableValue blockSize="33%" color="title"><h3>CMJ</h3></LeftTableValue>
+              <MiddleTableValue blockSize="33%" color="title"><h3>CMJ-SJ</h3></MiddleTableValue>
+              <RightTableValue blockSize="33%" color="title"><h3>SJ</h3></RightTableValue>
             </TableLine>
             <TableLine borderPosition="bottom">
-              <LeftTableValue ><h3>SJ</h3></LeftTableValue>
-              <RightTableValue color05={sj08}><h3>{sj08}cm</h3></RightTableValue>
+              <LeftTableValue blockSize="33%"><h3>{cmj08}cm</h3></LeftTableValue>
+              <MiddleTableValue blockSize="33%" cmjSj={Math.round((cmj08/sj08)*100) - 100}><h3>{Math.round((cmj08/sj08)*100) - 100}%</h3></MiddleTableValue>
+              <RightTableValue blockSize="33%"><h3>{sj08}cm</h3></RightTableValue>
             </TableLine>
           </>
           : null}
         {iml08cmjuni || imr08cmjuni ?
           <>
-            <TableLine borderPosition="bottom"><h3>CMJ-Uni</h3></TableLine>
             <TableLine>
-              <LeftTableValue color06={iml08cmjuni}><h3>{iml08cmjuni}cm</h3></LeftTableValue>
-              <RightTableValue color06={imr08cmjuni}><h3>{imr08cmjuni}cm</h3></RightTableValue>
+              <LeftTableValue blockSize="33%"><h3>{iml08cmjuni}cm</h3></LeftTableValue>
+              <MiddleTableValue color="title"><h3>CMJ-Uni</h3></MiddleTableValue>
+              <RightTableValue blockSize="33%"><h3>{imr08cmjuni}cm</h3></RightTableValue>
             </TableLine>
           </>
           : null}
@@ -234,13 +230,23 @@ const NameContainer = styled.section`
   box-sizing: border-box;`
 
 const TableLine = styled.div`
-  width: 100%;
+  width: ${props => (
+    (props.color === "title") ? "calc(100% - 20px)"
+    : "100%"
+  )};
   height: ${props => (
       (props.heigthSize === "message") ? "auto"
       : "45px"
     )};
+  background-color: ${props => (
+    (props.color === "title") ? "#05A9F1"
+    : "inherit"
+  )};
   padding: 0 10px 0 10px;
-  ;
+  margin-top: ${props => (
+    (props.margin === "top") ? "10px"
+    : "0"
+  )};
   border-top: ${props => (
       (props.borderPosition === "top") ? "1px solid #FFFFFF"
       : null
@@ -259,16 +265,23 @@ const TableLine = styled.div`
   }`
 
 const LeftTableValue = styled.div`
-  width: 50%;
+  width: ${props => (
+    props.blockSize ? "calc(100%/3)"
+    : "50%"
+  )};
   height: 100%;
   background-color: ${props => (
-      (props.color === 1 || props.color === "positivo" || props.color02 < 40 || props.color04 < 20 || props.color04 > 50 || props.color05 < 30 || props.color05 > 50) ? "#E14D3F"
-      : (props.color === 3 || props.color === "negativo" || props.color02 >= 60 || (props.color04 <= 40 && props.color04 >= 30) || (props.color05 <= 45 && props.color05 >= 35)) ? "#3DA59B"
-      : (props.color === 2 || (props.color02 >= 40 && props.color02 < 60) || ((props.color04 < 30 && props.color04 >= 20) || (props.color04 <= 50 && props.color04 > 40)) || ((props.color05 < 35 && props.color05 >= 30) || (props.color05 <= 50 && props.color05 > 45))) ? "#E0BD55"
+      (props.color === 1 || props.color === "positivo" || props.color02 < 40 || props.color04 < 20 || props.color04 > 50 || props.color05 < 30 || props.color05 > 50 || props.color06qfIqt < 50 || props.color06qfIqt > 80 || props.color07shSh > 20 || props.cmjSj < 5 || props.cmjSj > 20) ? "#E14D3F"
+      : (props.color === 3 || props.color === "negativo" || props.color02 >= 60 || (props.color04 <= 40 && props.color04 >= 30) || (props.color05 <= 45 && props.color05 >= 35) || (props.color06qfIqt <= 60 && props.color06qfIqt >= 70) || props.color07shSh <= 10) || (props.cmjSj <= 15 && props.cmjSj >= 10) ? "#3DA59B"
+      : (props.color === 2 || (props.color02 >= 40 && props.color02 < 60) || ((props.color04 < 30 && props.color04 >= 20) || (props.color04 <= 50 && props.color04 > 40)) || ((props.color05 < 35 && props.color05 >= 30) || (props.color05 <= 50 && props.color05 > 45)) || ((props.color06qfIqt < 60 && props.color06qfIqt >= 50) || (props.color06qfIqt <= 80 && props.color06qfIqt > 70)) || (props.color07shSh <= 20 && props.color07shSh > 10) || ((props.cmjSj < 10 && props.cmjSj >= 5) || (props.cmjSj <= 20 && props.cmjSj > 15))) ? "#E0BD55"
       : (props.color === "title") ? "#05A9F1"
       : "inherit"
     )};
   border-right: 2px solid #FFFFFF;
+  border-bottom: ${props => (
+      (props.borderPosition === "bottom") ? "4px solid #FFFFFF"
+      : null
+    )};
   border-spacing: 0;
   border-radius: ${props => (
     (props.color === "title") ? "none"
@@ -279,15 +292,37 @@ const LeftTableValue = styled.div`
   align-items: center;`
   
 const RightTableValue = styled.div`
-  width: 50%;
+  width: ${props => (
+    props.blockSize? "calc(100%/3)"
+    : "50%"
+  )};
   height: 100%;
   background-color: ${props => (
-      (props.color === 1 || props.color === "positivo" || props.color02 < 40 || props.color04 < 20 || props.color04 > 50 || props.color05 < 30 || props.color05 > 50) || props.color06 > 20 ? "#E14D3F"
-      : (props.color === 3 || props.color === "negativo" || props.color02 >= 60 || (props.color04 <= 40 && props.color04 >= 30) || (props.color05 <= 45 && props.color05 >= 35) || props.color06 <= 10) ? "#3DA59B"
-      : (props.color === 2 || (props.color02 >= 40 && props.color02 < 60) || ((props.color04 < 30 && props.color04 >= 20) || (props.color04 <= 50 && props.color04 > 40)) || ((props.color05 < 35 && props.color05 >= 30) || (props.color05 <= 50 && props.color05 > 45)) || (props.color06 <= 20 && props.color06 > 10)) ? "#E0BD55"
+      (props.color === 1 || props.color === "positivo" || props.color02 < 40 || props.color04 < 20 || props.color04 > 50 || props.color05 < 30 || props.color05 > 50 || props.color06 > 20  || props.color06qfIqt < 50 || props.color06qfIqt > 80 || props.color07shSh > 20 || props.cmjSj < 5 || props.cmjSj > 20)? "#E14D3F"
+      : (props.color === 3 || props.color === "negativo" || props.color02 >= 60 || (props.color04 <= 40 && props.color04 >= 30) || (props.color05 <= 45 && props.color05 >= 35) || props.color06 <= 10 || (props.color06qfIqt <= 60 && props.color06qfIqt >= 70) || props.color07shSh <= 10) || (props.cmjSj <= 15 && props.cmjSj >= 10) ? "#3DA59B"
+      : (props.color === 2 || (props.color02 >= 40 && props.color02 < 60) || ((props.color04 < 30 && props.color04 >= 20) || (props.color04 <= 50 && props.color04 > 40)) || ((props.color05 < 35 && props.color05 >= 30) || (props.color05 <= 50 && props.color05 > 45)) || (props.color06 <= 20 && props.color06 > 10) || ((props.color06qfIqt < 60 && props.color06qfIqt >= 50) || (props.color06qfIqt <= 80 && props.color06qfIqt > 70)) || (props.color07shSh <= 20 && props.color07shSh > 10) || ((props.cmjSj < 10 && props.cmjSj >= 5) || (props.cmjSj <= 20 && props.cmjSj > 15))) ? "#E0BD55"
+      : (props.color === "title") ? "#05A9F1"
       : "inherit"
     )};
-  border-radius: 0 25px 25px 0;
+  border-radius: ${props => (
+    (props.color === "title") ? "none"
+      : "0 25px 25px 0"
+    )};
+  display: flex;
+  justify-content: center;
+  align-items: center;`
+
+const MiddleTableValue = styled.div`
+  width: calc(100%/3);
+  height: 100%;
+  background-color: ${props => (
+      (props.color === 1 || props.color === "positivo" || props.color02 < 40 || props.color04 < 20 || props.color04 > 50 || props.color05 < 30 || props.color05 > 50 || props.color06qfIqt < 50 || props.color06qfIqt > 80 || props.color07shSh > 20 || props.cmjSj < 5 || props.cmjSj > 20) ? "#E14D3F"
+      : (props.color === 3 || props.color === "negativo" || props.color02 >= 60 || (props.color04 <= 40 && props.color04 >= 30) || (props.color05 <= 45 && props.color05 >= 35) || (props.color06qfIqt <= 60 && props.color06qfIqt >= 70) || props.color07shSh <= 10) || (props.cmjSj <= 15 && props.cmjSj >= 10) ? "#3DA59B"
+      : (props.color === 2 || (props.color02 >= 40 && props.color02 < 60) || ((props.color04 < 30 && props.color04 >= 20) || (props.color04 <= 50 && props.color04 > 40)) || ((props.color05 < 35 && props.color05 >= 30) || (props.color05 <= 50 && props.color05 > 45)) || ((props.color06qfIqt < 60 && props.color06qfIqt >= 50) || (props.color06qfIqt <= 80 && props.color06qfIqt > 70)) || (props.color07shSh <= 20 && props.color07shSh > 10) || ((props.cmjSj < 10 && props.cmjSj >= 5) || (props.cmjSj <= 20 && props.cmjSj > 15))) ? "#E0BD55"
+      : (props.color === "title") ? "#05A9F1"
+      : "inherit"
+    )};
+  border-right: 2px solid #FFFFFF;
   display: flex;
   justify-content: center;
   align-items: center;`
